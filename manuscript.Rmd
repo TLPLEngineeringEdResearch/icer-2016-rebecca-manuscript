@@ -1,0 +1,29 @@
+---
+title: "Rethinking how students learn to design programs"
+author: "Blinded for Review"
+date: "March 20, 2016"
+output:
+  pdf_document:
+    keep_tex: true
+    number_sections: true
+    highlight: "tango"
+    toc: true
+    md_extensions: +implicit_figures +grid_tables +fenced_code_blocks +fenced_code_attributes
+    citation_package: 'none'
+    pandoc_args: [
+      --bibliography=bibliography.bib,
+      --csl=apa.csl,
+      --filter=pandoc-citeproc
+    ]
+  word_document:
+    highlight: "tango"
+    toc: true
+    md_extensions: +implicit_figures +grid_tables +fenced_code_blocks +fenced_code_attributes
+    pandoc_args: [
+      --bibliography=bibliography.bibtex,
+      --csl=apa.csl,
+      --filter=pandoc-citeproc
+    ]---
+
+
+
