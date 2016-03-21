@@ -4,6 +4,9 @@
 .RData
 .Ruserdata
 
+# Compiled Manuscript Output
+manuscript.pdf
+
 # LaTeX stuff
 
 ## Core latex/pdflatex auxiliary files:
@@ -42,3 +45,4 @@
 *.synctex.gz
 *.synctex.gz(busy)
 *.pdfsync
+
