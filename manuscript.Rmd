@@ -12,7 +12,7 @@ output:
     citation_package: 'none'
     pandoc_args: [
       --bibliography=bibliography.bib,
-      --csl=apa.csl,
+      --csl=acm-sig-proceedings-long-author-list.csl,
       --filter=pandoc-citeproc
     ]
   word_document:
@@ -21,7 +21,7 @@ output:
     md_extensions: +implicit_figures +grid_tables +fenced_code_blocks +fenced_code_attributes
     pandoc_args: [
       --bibliography=bibliography.bibtex,
-      --csl=apa.csl,
+      --csl=acm-sig-proceedings-long-author-list.csl,
       --filter=pandoc-citeproc
     ]---
 
