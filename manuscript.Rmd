@@ -1,27 +1,24 @@
 ---
 title: "Rethinking how students learn to design programs"
-author: "Blinded for Review"
+author: "Author Blinded for Review"
 date: "March 20, 2016"
-abstract: This is the abstract
+abstract: This is the complete abstract
 documentclass: sig-alternate
-geometry: paperwidth=8.5in paperheight=11in
-includes:
+geometry:
+  - paperwidth=8.5in
+  - paperheight=11in
+template: sig-alternate-modified-for-pandoc.tex
 output:
   pdf_document:
     md_extensions: +implicit_figures +grid_tables +fenced_code_blocks +fenced_code_attributes +raw_tex
     keep_tex: true
-  word_document:
-    reference_docx: pubform.docx
     highlight: "tango"
-    md_extensions: +implicit_figures +grid_tables +fenced_code_blocks +fenced_code_attributes
     pandoc_args: [
       --smart,
-      --bibliography=bibliography.bib,
-      --csl=acm-sig-proceedings,
-      --filter=pandoc-citeproc
+      --template=sig-alternate-modified-for-pandoc
     ]
 ---
 
 # Section 1
 
-
+## Subsection
