@@ -2,12 +2,24 @@
 title: "Rethinking how students learn to design programs"
 author: "Author Blinded for Review"
 date: "March 20, 2016"
-abstract: This is the complete abstract
+abstract: |
+  This paper focuses on a historically understudied area in computing education: attending to students’ *design thinking* in university-level introductory programming courses. We offer an account of one student---"Rebecca"---and her experiences and code from a second-semester course on programming concepts for engineers. Using data from both code snapshots and clinical interviews, we explicate both the challenges of studying students’ software design processes and the potential for such study to inform accounts of teaching and learning.We detail the case of Rebecca, a first-year Electrical Engineering student taking a required 2^nd^-semester programming course in C. Our analysis focuses on two related aspects of Rebecca’s code for a multi-week project:
+
+  1. The origin, nature, and evolution of unusual structural and behavioral features of Rebecca’s code
+  2. The subtle, yet complex reasons that led Rebecca to make particular design choices in her code
+
+  Our data comes from ethnographic observation of Rebecca’s class, fine-grained compile-time snapshots of Rebecca’s codebase, and semistructured interviews with Rebecca. We first present an analysis of the compile-time snapshots, detailing Rebecca’s unusual use of file-scanning loops and her seven-fold repetition of a particular code chunk (once for each day of the week). We then augment that analysis with data from semi-structured interviews with Rebecca, which reveal that affect [@hannula_affect_2004; @eynde_case_2006] and framing [@vandesande_achieving_2012; @hammer_resources_2005] offer substantial explanatory power for understanding why Rebecca made particular design choices.
+  documentclass: sig-alternate
+
+# Document options
 documentclass: sig-alternate
-geometry:
-  - paperwidth=8.5in
-  - paperheight=11in
 template: sig-alternate-modified-for-pandoc.tex
+wrap: none
+# Citation options
+filter: pandoc-citeproc
+bibliography: bibliography.bib
+csl: citation-styles/acm-sig-proceedings-long-author-list.csl
+# Rmarkdown Output Options
 output:
   pdf_document:
     md_extensions: +implicit_figures +grid_tables +fenced_code_blocks +fenced_code_attributes +raw_tex
@@ -21,4 +33,8 @@ output:
 
 # Section 1
 
-## Subsection
+## Acknowledgments
+
+Blinded for review.
+
+## References
