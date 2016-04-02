@@ -422,7 +422,10 @@ $endif$
 %\terms{Theory}
 
 \keywords{ACM proceedings; \LaTeX; text tagging}
+
+% Print the body of the document
 $body$
+% Handle References
 $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$
@@ -432,6 +435,7 @@ $else$
 \renewcommand\refname{$biblio-title$}
 $endif$
 $endif$
+
 \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
 
 $endif$
@@ -444,4 +448,5 @@ $for(include-after)$
 $include-after$
 
 $endfor$
+
 \end{document}
