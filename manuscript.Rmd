@@ -10,11 +10,6 @@ abstract: |
 
   Our data comes from ethnographic observation of Rebecca’s class, fine-grained compile-time snapshots of Rebecca’s codebase, and semistructured interviews with Rebecca. We first present an analysis of the compile-time snapshots, detailing Rebecca’s unusual use of file-scanning loops and her seven-fold repetition of a particular code chunk (once for each day of the week). We then augment that analysis with data from semi-structured interviews with Rebecca, which reveal that affect [@hannula_affect_2004; @eynde_case_2006] and framing [@vandesande_achieving_2012; @hammer_resources_2005] offer substantial explanatory power for understanding why Rebecca made particular design choices.
 
-# Document options
-documentclass: sig-alternate
-template: sig-alternate-modified-for-pandoc.tex
-wrap: none
-
 # Citation options
 filter: pandoc-citeproc
 bibliography: bibliography.bib
