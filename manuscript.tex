@@ -1,0 +1,85 @@
+\section{Introduction}\label{introduction}
+
+\subsection{We need more research on how software gets designed}\label{we-need-more-research-on-how-software-gets-designed}
+
+In 2010, the journal \emph{Design Studies} devoted a special issue to studies of how professional software engineers design complex systems {[}9{]}. The journal issue featured five different research perspectives on the same dataset: videos of three professional software engineering teams trying to design a traffic simulator. The existence of the journal issue, the monograph that followed it {[}8{]} and the investigations contained therein, were motivated by what the issue's editors saw as a pressing need:
+
+\begin{quote}
+\emph{{[}N{]}ot enough is known about the formative stages of software design.} The software engineering community has produced numerous design tools and languages, but, in practice, when software designers are first presented with a novel design problem, they more often than not will eschew these tools and languages. During formative design, software engineers spend a great deal of time engaging in creative, exploratory design thinking using pen and paper or a whiteboard---whether alone or in a small group. However, not enough is known about how software designers work in such settings. What do designers actually do during early software design? How do they communicate? What sorts of drawings do they create? \emph{What kinds of strategies do they {[}software engineers{]} apply in exploring the vast space of possible designs?} {[}{[}9{]} p.~533; emphasis mine{]}
+\end{quote}
+
+Research in both the special issue {[}9{]} and the monograph {[}8{]} takes on a variety of challenges in the study of expert software design practice. One challenge, for example, is that of understanding how engineers process, prioritize, and cope with design requirements. Ball, Linden, Onarheim, and Christensen {[}2{]} observed that engineers deploy mixed strategies, developing solutions breadth-first for easy problems and depth-first for more complex problems. They also found that the more complex a requirement became, the more likely engineers were to create speculative simulations (through talk and representations) about how a system might work to solve that problem {[}2{]}.
+
+Looking at the design sessions longitudinally, Baker and van der Hoek {[}1{]} explored the shape and trajectory of how ideas generated in the design process develop and relate to one another. Those researchers found roughly a third of the ideas discussed in a typical design session ``were reiterations or rephrasings of previously stated ideas'' {[}1{]}. While it is perhaps frustrating that ideas would be repeated so much, the authors argue such repetition can be viewed as a kind of continual revisitation to make sure a proposed design coheres:
+
+\begin{quote}
+Rather than representing a failure on the part of the designers, this repetition seems to be a necessary character of successful design sessions. Each time an idea is resurrected it is placed them {[}sic{]} in a new context, and compared to different aspects of the system. In this way, a concept of compatible, elegant design ideas is slowly converged upon. {[}1{]}
+\end{quote}
+
+Perhaps most germane to the work presented here, Jackson {[}7{]} explores the role of \emph{structure} in software design. Jackson's meaning in using the word ``structure'' is broad. It can best be described as the arrangement of and relationships between the elements of a system. But, the broadness is deliberate, because Jackson's overall argument is that the work of software often involves a coordination of different structures, some of which drive the organization of others. In Jackson's {[}7{]} analysis of the dataset, designers worked with various kinds of structured sets to build software that could simulate traffic patterns in a city section. I argue, then, that part of the work of software design becomes that of defining and coordinating structural relationships at various levels of abstraction:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{The data-to-be-modeled}. In this case, the analog was a system of roads and intersections on which one can simulate traffic. Schematically, this system can be structured on the Cartesian plane of a map. Its representation (a diagrammatic map-like network of streets) works to organize how the system-to-be-modeled looks in the real world.
+\item
+  The \emph{actors} present in the system-to-be-modeled. In this case, that means abstracting from the map to all of the \emph{actors} that simulator software would need to send data to and get data from: including traffic signal units, traffic signal controllers, drivers, and vehicle sensors.
+\item
+  The \emph{meta-entities} that must exist to execute the actual simulation. Crucially, these abstractions may not be the same as the actors \emph{in} the system.{[}\^{}1{]} In this case, additional computational entities must be added to carry out a traffic simulation, such as an arrivals model and a simulation clock {[}7{]}
+\item
+  The \emph{programming code} that embodies the data and behaviors of the entities and meta-entities. While to some degree aesthetic, the symbolic structure of code is in many ways driven by decisions about structural relationships in other levels of abstraction.
+\end{itemize}
+
+How engineers develop and interact with even the first three kinds of structural representations can profoundly influence the nature and quality of the code they produce. As Jackson {[}7{]} observes---in notable contrast to {[}1{]}---early negotiations of structure led to design decisions that were \emph{not} revisited later:
+
+\begin{quote}
+The traffic simulation problem was of a kind unfamiliar to all three design teams. All three quite rightly tried immediately to assimilate the problem to something they already knew. Two teams took the view that the problem was an instance of the Model-View-Controller (MVC) software pattern; the third identified the problem as `like a drawing program'. Unfortunately, these hasty classifications were inadequate; but in every case they were accepted uncritically and never explicitly questioned. {[}7{]}
+\end{quote}
+
+Ultimately, careful study of how software engineers design shows us the enormous complexity involved in producing effective and thorough code. And, much of that complexity is both afforded and constrained by talk, representational infrastructure, and knowledge of larger-scale solution patterns. It's striking, then, that this research perspective on how programing design work gets done---for example, the detailed ethnomethodological analysis by Rooksby, Ikeya and colleagues on how engineers use a whiteboard {[}6, 10, 11{]}---seems largely underrepresented in studies of how students learn to program. Instead, the latest generation of research on student learning in programming has focused much more extensively on questions like \emph{how can we assess and mitigate students' difficulty in programming?} than it has on questions like \emph{how do students learn and display evidence of design thinking in programming?}
+
+\subsection{Acknowledgments}\label{acknowledgments}
+
+Blinded for review.
+
+\newpage{}
+
+\subsection*{References}\label{references}
+\addcontentsline{toc}{subsection}{References}
+
+\hypertarget{refs}{}
+\hypertarget{ref-bakerux5fideasux5f2010}{}
+{[}1{]} Baker, A. and Van der Hoek, A. 2010. Ideas, subjects, and cycles as lenses for understanding the software design process. \emph{Design Studies}. 31, 6 (Nov. 2010), 590--613.
+
+\hypertarget{ref-ballux5fdesignux5f2010}{}
+{[}2{]} Ball, L.J., Onarheim, B. and Christensen, B.T. 2010. Design requirements, epistemic uncertainty and~solution development strategies in software design. \emph{Design Studies}. 31, 6 (Nov. 2010), 567--589.
+
+\hypertarget{ref-eyndeux5fcaseux5f2006}{}
+{[}3{]} Eynde, P. and Hannula, M. 2006. The Case Study of Frank. \emph{Educational Studies in Mathematics}. 63, 2 (Oct. 2006), 123--129.
+
+\hypertarget{ref-hammerux5fresourcesux5f2005}{}
+{[}4{]} Hammer, D., Elby, A., Scherr, R.E. and Redish, E.F. 2005. Resources, framing, and transfer. \emph{Transfer of learning from a modern multidisciplinary perspective}. J.P. Mestre, ed. IAP.
+
+\hypertarget{ref-hannulaux5faffectux5f2004}{}
+{[}5{]} Hannula, M., Evans, J., Philippou, G. and Zan, R. 2004. Affect in Mathematics EducationExploring Theoretical Frameworks. Research Forum. \emph{International Group for the Psychology of Mathematics Education}. (2004), 30.
+
+\hypertarget{ref-ikeyaux5frecoveringux5f2012}{}
+{[}6{]} Ikeya, N., Luck, R. and Randall, D. 2012. Recovering the emergent logic in a software design exercise. \emph{Design Studies}. 33, 6 (Nov. 2012), 611--629.
+
+\hypertarget{ref-jacksonux5frepresentingux5f2010}{}
+{[}7{]} Jackson, M. 2010. Representing structure in a software system design. \emph{Design Studies}. 31, 6 (Nov. 2010), 545--566.
+
+\hypertarget{ref-petreux5fsoftwareux5f2014}{}
+{[}8{]} Petre, M. and van der Hoek, A. eds. 2014. \emph{Software designers in action: A human-centric look at design work}. CRC Press, Taylor \& Francis Group.
+
+\hypertarget{ref-petreux5feditorialux5f2010}{}
+{[}9{]} Petre, M., van der Hoek, A. and Baker, A. 2010. Editorial. \emph{Design Studies}. 31, 6 (Nov. 2010), 533--544.
+
+\hypertarget{ref-rooksbyux5fjustux5f2010}{}
+{[}10{]} Rooksby, J. 2010. ``Just try to do it at the whiteboard'': Researcher-participant interaction and issues of generalisation. \emph{Proceedings of the Studying Professional Software Design (SPSD) Conference} (San Diego, CA, USA, 2010).
+
+\hypertarget{ref-rooksbyux5fcollaborationux5f2012}{}
+{[}11{]} Rooksby, J. and Ikeya, N. jan.-feb. 20122012. Collaboration in Formative Design: Working Together at a Whiteboard. \emph{IEEE Software}. 29, 1 (jan.-feb. 2012Feb. 2012), 56--60.
+
+\hypertarget{ref-vandesandeux5fachievingux5f2012}{}
+{[}12{]} Van de Sande, C.C. and Greeno, J.G. 2012. Achieving Alignment of Perspectival Framings in Problem-Solving Discourse. \emph{Journal of the Learning Sciences}. 21, 1 (2012), 1--44.
