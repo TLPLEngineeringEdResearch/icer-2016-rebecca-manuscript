@@ -180,8 +180,8 @@
 % Scale images if necessary, so that they will not overflow the page
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-$endif$
+% \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% $endif$
 % $if(links-as-notes)$
 % % Make links footnotes instead of hotlinks:
 % \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
@@ -405,27 +405,6 @@ $endif$
 % Print the body of the document
 $body$
 % Handle References
-$if(natbib)$
-$if(bibliography)$
-$if(biblio-title)$
-$if(book-class)$
-\renewcommand\bibname{$biblio-title$}
-$else$
-\renewcommand\refname{$biblio-title$}
-$endif$
-$endif$
 
-\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
-
-$endif$
-$endif$
-$if(biblatex)$
-\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-
-$endif$
-$for(include-after)$
-$include-after$
-
-$endfor$
 
 \end{document}
