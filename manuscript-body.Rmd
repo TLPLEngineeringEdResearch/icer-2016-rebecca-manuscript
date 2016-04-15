@@ -13,7 +13,7 @@ abstract: |
 # Citation options
 filter: pandoc-citeproc
 bibliography: bibliography.bib
-csl: citation-styles/acm-sig-proceedings-long-author-list.csl
+csl: acm-sig-proceedings.csl
 ---
 
 # Introduction
