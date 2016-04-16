@@ -9,11 +9,10 @@ manuscript :
 		-f markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash+implicit_figures+grid_tables+fenced_code_blocks+fenced_code_attributes+raw_tex+yaml_metadata_block \
 		-t latex \
 		--latex-engine=/usr/local/texlive/2015/bin/x86_64-darwin/pdflatex \
-		--template=template.tex \
 		--natbib \
 		--highlight-style=tango \
 		--wrap=none \
-		-o manuscript.tex \
+		-o manuscript-body.tex \
 		manuscript-body.Rmd
 
 
