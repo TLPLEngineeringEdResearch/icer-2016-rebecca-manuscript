@@ -46,7 +46,11 @@
 % For tracking purposes - this is V2.0 - May 2012
 
 \documentclass{sig-alternate-05-2015}
-\usepackage{natbib}
+\usepackage[numbers]{natbib}
+
+% pandoc's tightlist
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 \begin{document}
 
@@ -78,15 +82,8 @@
 %\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
 % --- End of Author Metadata ---
 
-\title{Alternate {\ttlit ACM} SIG Proceedings Paper in LaTeX
-Format\titlenote{(Produces the permission block, and
-copyright information). For use with
-SIG-ALTERNATE.CLS. Supported by ACM.}}
-\subtitle{[Extended Abstract]
-\titlenote{A full version of this paper is available as
-\textit{Author's Guide to Preparing ACM SIG Proceedings Using
-\LaTeX$2_\epsilon$\ and BibTeX} at
-\texttt{www.acm.org/eaddress.htm}}}
+\title{Reconstructing design thinking and learning through code snapshots and clinical interviews}
+
 %
 % You need the command \numberofauthors to handle the 'placement
 % and alignment' of the authors beneath the title.
@@ -129,11 +126,12 @@ SIG-ALTERNATE.CLS. Supported by ACM.}}
 %
 % 1st. author
 \alignauthor
-Ben Trovato\titlenote{Dr.~Trovato insisted his name be first.}\\
-       \affaddr{Institute for Clarity in Documentation}\\
-       \affaddr{1932 Wallamaloo Lane}\\
-       \affaddr{Wallamaloo, New Zealand}\\
-       \email{trovato@corporation.com}
+% Ben Trovato\titlenote{Dr.~Trovato insisted his name be first.}\\
+%        \affaddr{Institute for Clarity in Documentation}\\
+%        \affaddr{1932 Wallamaloo Lane}\\
+%        \affaddr{Wallamaloo, New Zealand}\\
+%        \email{trovato@corporation.com}
+Authors Blinded For Review
 }
 \maketitle
 \begin{abstract}
@@ -195,4 +193,6 @@ Ben Trovato\titlenote{Dr.~Trovato insisted his name be first.}\\
 
 \input{manuscript-body.tex}
 
+\bibliographystyle{acm}
+\bibliography{bibliography}
 \end{document}
