@@ -1,0 +1,282 @@
+---
+title: "Rebecca’s One-Stop Flight Code"
+output:
+  pdf_document:
+    highlight: kate
+geometry: paperwidth=40in, paperheight=72in
+---
+
+```c
+//"Rebecca Wells"
+//1 stop flight function
+
+#include <stdio.h>
+#include <string.h>
+//#include "airports.h"
+
+int one_stop_flight(int choice)
+{
+  int route_id, id, input, flight_number, d_hour, d_mins, a_hour, a_mins, d_hour_stop, d_mins_stop, a_hour_stop, a_mins_stop, z, layover, b;
+  char departure_input[4], arrival_input[4], stop_code[4], days[7], departure_city[50], arrival_city[50], stop_city[50], arrival_time[7], departure_time[7], a_letter, d_letter, travel_days[10], airport_code[4], city[50], arrival_airport[4], departure_airport[4], a_letter_stop, d_letter_stop;
+  FILE *airports, *flights, *routes;
+
+  printf("Enter departure and arrival airport codes: ");
+  scanf("%s %s", departure_input, arrival_input);
+  flights = fopen("flights.txt", "r");
+  airports = fopen("airports.txt", "r");
+  routes = fopen("routes.txt", "r");
+
+  while(fscanf(airports, "%s  %50[^\n]", airport_code, city) != EOF)   //scan for the departure code but not to the arrival code
+    {
+      if(airport_code != departure_input || airport_code != arrival_input)
+        {
+          while(fscanf(routes, "%d.  %s %s", &route_id, departure_airport, arrival_airport) != EOF)  //finds the name of the city of the departure airport
+            {
+              if(departure_input[0]==departure_airport[0] && departure_input[1]==departure_airport[1] && departure_input[2]==departure_airport[2])
+                {
+                  if(arrival_airport[0] != arrival_input[0] || arrival_airport[1] != arrival_input[1] || arrival_airport[2] != arrival_input[2])
+                    {
+                      strcpy(stop_code, arrival_airport);
+                      rewind(routes);
+                      departure_airport[0]=' ';
+                      departure_airport[1]=' ';
+                      departure_airport[2]=' ';
+                      arrival_airport[0]=' ';
+                      arrival_airport[1]=' ';
+                      arrival_airport[2]=' ';
+                      while(fscanf(routes, "%d.  %s %s", &route_id, departure_airport, arrival_airport) != EOF)  //now searches for the place where the stop is the
+                        {                                                                                      //depart airport and the arrival input is correct
+                          if(stop_code[0]==departure_airport[0] && stop_code[1]==departure_airport[1] && stop_code[2]==departure_airport[2] && arrival_input[0]==arrival_airport[0] && arrival_input[1]==arrival_airport[1] && arrival_input[2]==arrival_airport[2])
+                            {
+                              id=route_id;
+                              printf("Enter a day of the week (1-7, or 0 for all days):");
+                              scanf("%d", &input);
+
+                              //now depending on the day entered, program is suppose to run through each option that was entered, find where the id is similar, then
+                              //check the days, finally check the time that is involved in the stop to make sure the layover is the correct time
+                              //end with printing out the message if you find a suitable one stop flight
+
+                              if(input==1)
+                                {
+                                  while(fscanf(flights, "%d %d %d:%d%c %d:%d%c %s", flight_number, route_id, d_hour, d_mins, d_letter, a_hour, a_mins, a_letter, days) != EOF)
+                                    {
+                                      if(id==route_id)
+                                        {
+                                          while(z<7)
+                                            {
+                                              if(days[z]==1)
+                                                {
+                                                  //if(check_days() == TRUE)
+                                                    {
+                                                      // check_time();
+                                                      if(layover >= 60 && layover <= 120)
+                                                        {
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, travel_days, d_hour, d_mins, d_letter, departure_city, departure_input, a_hour_stop, a_mins_stop, a_letter_stop, stop_city, stop_code);
+                                                          printf("Flight %d (%s)\n    %d:%d.m. %s, %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, (days), d_hour_stop, d_mins_stop, d_letter_stop, stop_city, stop_code, a_hour, a_mins, a_letter, arrival_city, arrival_input);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                              //if day entered is 2
+
+                              if(input==2)
+                                {
+                                  while(fscanf(flights, "%d %d %d:%d%c %d:%d%c %s", flight_number, route_id, d_hour, d_mins, d_letter, a_hour, a_mins, a_letter, days) != EOF)
+                                    {
+                                      if(id==route_id)
+                                        {
+                                          while(z<7)
+                                            {
+                                              if(days[z]==2)
+                                                {
+                                                 // if(check_days() == TRUE)
+                                                    {
+                                                      //check_time();
+                                                      if(layover >= 60 && layover <= 120)
+                                                        {
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, travel_days, d_hour, d_mins, d_letter, departure_city, departure_input, a_hour_stop, a_mins_stop, a_letter_stop, stop_city, stop_code);
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, (days), d_hour_stop, d_mins_stop, d_letter_stop, stop_city, stop_code, a_hour, a_mins, a_letter, arrival_city, arrival_input);
+                                                        }
+                                                    }  
+                                                }
+                                            }
+                                        }             
+                                    }
+                                }
+
+                              //if day entered is 3
+
+                              if(input==3)
+                                {
+                                  while(fscanf(flights, "%d %d %d:%d%c %d:%d%c %s", flight_number, route_id, d_hour, d_mins, d_letter, a_hour, a_mins, a_letter, days) != EOF)
+                                    {
+                                      if(id==route_id)
+                                        {
+                                          while(z<7)
+                                            {
+                                              if(days[z]==3)
+                                                {
+                                                  //if(check_days() == TRUE)
+                                                    {
+                                                      //check_time();
+                                                      if(layover >= 60 && layover <= 120)
+                                                        {
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, travel_days, d_hour, d_mins, d_letter, departure_city, departure_input, a_hour_stop, a_mins_stop, a_letter_stop, stop_city, stop_code);
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, travel_days, d_hour_stop, d_mins_stop, d_letter_stop, stop_city, stop_code, a_hour, a_mins, a_letter, arrival_city, arrival_input);
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                              //if day entered is 4
+
+                              if(input==4)
+                                {
+                                  while(fscanf(flights, "%d %d %d:%d%c %d:%d%c %s", flight_number, route_id, d_hour, d_mins, d_letter, a_hour, a_mins, a_letter, days) != EOF)
+                                    {
+                                      if(id==route_id)
+                                        {
+                                          while(z<7)
+                                            {
+                                              if(days[z]==4)
+                                                {
+                                                 // if(check_days() == TRUE)
+                                                    {
+                                                      //check_time();
+                                                      if(layover >= 60 && layover <= 120)
+                                                        {
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, travel_days, d_hour, d_mins, d_letter, departure_city, departure_input, a_hour_stop, a_mins_stop, a_letter_stop, stop_city, stop_code);
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, travel_days, d_hour_stop, d_mins_stop, d_letter_stop, stop_city, stop_code, a_hour, a_mins, a_letter, arrival_city, arrival_input);
+                                                        }
+                                                    }
+
+                                                }
+                                            }              
+                                        }
+                                    }
+                                }
+
+                              //if day entered is 5
+
+                              if(input==5)
+                                {
+                                  while(fscanf(flights, "%d %d %d:%d%c %d:%d%c %s", flight_number, route_id, d_hour, d_mins, d_letter, a_hour, a_mins, a_letter, days) != EOF)
+                                    {
+                                      if(id==route_id)
+                                        {
+                                          while(z<7)
+                                            {
+                                              if(days[z]==5)
+                                                {
+                                                 // if(check_days() == TRUE)
+                                                    {
+                                                      //check_time();
+                                                      if(layover >= 60 && layover <= 120)
+                                                        {
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, travel_days, d_hour, d_mins, d_letter, departure_city, departure_input, a_hour_stop, a_mins_stop, a_letter_stop, stop_city, stop_code);
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, travel_days, d_hour_stop, d_mins_stop, d_letter_stop, stop_city, stop_code, a_hour, a_mins, a_letter, arrival_city, arrival_input);
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                }                
+
+                              //if day entered is 6
+
+                              if(input==6)
+                                {
+                                  while(fscanf(flights, "%d %d %d:%d%c %d:%d%c %s", flight_number, route_id, d_hour, d_mins, a_hour, a_mins, a_letter, days) != EOF)
+                                    {
+                                      if(id==route_id)
+                                        {
+                                          while(z<7)
+                                            {
+                                              if(days[z]==6)
+                                                {
+                                                 // if(check_days() == TRUE)
+                                                    {
+                                                      //check_time();
+                                                      if(layover >= 60 && layover <= 120)
+                                                        {
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, travel_days, d_hour, d_mins, d_letter, departure_city, departure_input, a_hour_stop, a_mins_stop, a_letter_stop, stop_city, stop_code);
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, travel_days, d_hour_stop, d_mins_stop, d_letter_stop, stop_city, stop_code, a_hour, a_mins, a_letter, arrival_city, arrival_input);
+                                                        }
+                                                    }
+
+                                                }                
+                                            }
+                                        }
+                                    }
+                                }    
+
+                              //if day entered is 7
+
+                              if(input==7)
+                                {
+                                  while(fscanf(flights, "%d %d %d:%d%c %d:%d%c %s", flight_number, route_id, d_hour, d_mins, d_letter, a_hour, a_mins, a_letter, days) != EOF)
+                                    {
+                                      if(id==route_id)
+                                        {
+                                          while(z<7)
+                                            {
+                                              if(days[z]==7)
+                                                {
+                                                 // if(check_days() == TRUE)
+                                                    {
+                                                      //check_time();
+                                                      if(layover >= 60 && layover <= 120)
+                                                        {
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, travel_days, d_hour, d_mins, d_letter, departure_city, departure_input, a_hour_stop, a_mins_stop, a_letter_stop, stop_city, stop_code);
+                                                          printf("Flight %d (%s)\n    %d:%d%c.m. %s (%s)\n    %d:%d%c.m. %s (%s)\n", flight_number, travel_days, d_hour_stop, d_mins_stop, d_letter_stop, stop_city, stop_code, a_hour, a_mins, a_letter, arrival_city, arrival_input);
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                          /* if(input==0)
+                      {
+                        while(fscanf(flights, "%d, %d, (time) (time) (days)", flight_number, route_id, departure_time, arrival_time, (days)) != EOF)
+                          {
+                            if(id==route_id)
+                              {
+                                if(*days has daily*)
+                                  {
+                                    printf("Flight %d (%s)\n    %d:%d.m. %s, %s (%s)\n    %d:%d.m. %s, %s (%s)\n", flight_number, (days), d_hour, d_mins, departure_city, departure_state, departure_input, a_hour, a_mins, stop_city, stop_state, stop_code);
+                                    printf("Flight %d (%s)\n    %d:%d.m. %s, %s (%s)\n    %d:%d.m. %s, %s (%s)\n", flight_number, (days), d_hour_stop, d_mins_stop, stop_city, stop_state, stop_code, a_hour_stop, a_mins_stop, arrival_city, arrival_state, arrival_input);
+                                  }
+                                else
+                                  {
+                                    printf("Route %s to %s has no 1-stop flights on the specified days\n", departure_input, arrival_input);
+                                  }
+                              }
+                          }
+                          }*/
+                        }
+                    }
+                }
+            }
+        }
+      else
+        {
+          printf("Either airport %s or %s doesn't exist", departure_input, arrival_input);
+        }
+    }
+  return;
+}
+```
