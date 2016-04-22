@@ -1,0 +1,237 @@
+\section{Introduction}\label{introduction}
+
+\subsection{We need more research on how software gets designed}\label{we-need-more-research-on-how-software-gets-designed}
+
+In 2010, the journal \emph{Design Studies} devoted a special issue to studies of how professional software engineers design complex systems \cite{petre_editorial_2010}. The journal issue featured five different research perspectives on the same dataset: videos of three professional software engineering teams trying to design a traffic simulator. The existence of the journal issue, the monograph that followed it \cite{petre_software_2014} and the investigations contained therein, were motivated by what the issue's editors saw as a pressing need:
+
+\begin{quote}
+\emph{Not enough is known about the formative stages of software design.} The software engineering community has produced numerous design tools and languages, but, in practice, when software designers are first presented with a novel design problem, they more often than not will eschew these tools and languages. During formative design, software engineers spend a great deal of time engaging in creative, exploratory design thinking using pen and paper or a whiteboard---whether alone or in a small group. However, not enough is known about how software designers work in such settings. What do designers actually do during early software design? How do they communicate? What sorts of drawings do they create? \emph{What kinds of strategies do they software engineers apply in exploring the vast space of possible designs?} \cite{petre_editorial_2010} p.~533; emphasis mine
+\end{quote}
+
+Research in both the special issue \cite{petre_editorial_2010} and the monograph \cite{petre_software_2014} takes on a variety of challenges in the study of expert software design practice. One challenge, for example, is that of understanding how engineers process, prioritize, and cope with design requirements. Ball, Linden, Onarheim, and Christensen \cite{ball_design_2010} observed that engineers deploy mixed strategies, developing solutions breadth-first for easy problems and depth-first for more complex problems. They also found that the more complex a requirement became, the more likely engineers were to create speculative simulations (through talk and representations) about how a system might work to solve that problem \cite{ball_design_2010}.
+
+Looking at the design sessions longitudinally, Baker and van der Hoek \cite{baker_ideas_2010} explored the shape and trajectory of how ideas generated in the design process develop and relate to one another. Those researchers found roughly a third of the ideas discussed in a typical design session ``were reiterations or rephrasings of previously stated ideas'' \cite{baker_ideas_2010}. While it is perhaps frustrating that ideas would be repeated so much, the authors argue such repetition can be viewed as a kind of continual revisitation to make sure a proposed design coheres:
+
+\begin{quote}
+Rather than representing a failure on the part of the designers, this repetition seems to be a necessary character of successful design sessions. Each time an idea is resurrected it is placed them sic in a new context, and compared to different aspects of the system. In this way, a concept of compatible, elegant design ideas is slowly converged upon. \cite{baker_ideas_2010}
+\end{quote}
+
+\section{Analyzing only the code Rebecca turned in: What an instructor might see}\label{analyzing-only-the-code-rebecca-turned-in-what-an-instructor-might-see}
+
+In this phase of analysis, I restrict data to only the final version of \texttt{one\_stop\_flight.c} Rebecca submitted as part of her project. This restriction is important because of the data that gets left out. We're forced to see Rebecca's design work the way her instructor did when he graded it: as a final product. The submitted code contains little---if any---evidence of design iteration. And, we have almost no access to streams of activity (inscriptional, gestural, verbal, and otherwise material) that would help us understand Rebecca's early stage design \citep{petre_software_2014}. Indeed, other than the code itself, the only artifacts that actually carry Rebecca's voice in this phase of analysis are the comments she places in her code. Put another way: restricting our scope to just code---and only the final submitted code at that---denies the analyst access to the channels of ``talk, embodied action, and inscription'' involved in design work \citep[ p.~179]{hall_disrupting_2002}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{RebeccasCode/OneStopFlightSupergraphic.pdf}
+\caption{The entirety of Rebecca's \texttt{one\_stop\_flight.c} source code at the time her project was submitted for grading. Our final-code-only analysis focuses on two design features of this code: its multiply-nested \texttt{fscanf()} structure for handling flight data; and the seven-fold line-for-line repetition of a single block of code for checking days of the week.}
+\end{figure}
+
+\subsection{Rebecca's file-scanning solution is hard to read and has high time-complexity}\label{rebeccas-file-scanning-solution-is-hard-to-read-and-has-high-time-complexity}
+
+After declaring variables and opening the three provided text files (flights, routes, and airports)\footnote{See Appendix A for examples of each of the three file types.}, Rebecca's one-stop flight code enters a series of conditionally-nested \texttt{fscanf()} commands. The purpose of \texttt{fscanf()} is to scan through the characters of a file, most often scanning one line at a time. The programmer can specify delimited patterns of text to look for, e.g., ``in each line, look for a word, followed by a space, followed by two digits.'' \texttt{fscanf()} also gives the programmer the flexibility to store the values of matched patterns to variables. Here's an annotated explanation of file-scanning pattern Rebecca uses on line 24 of her code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fscanf(               }\CommentTok{// Read in a line of data}
+  \NormalTok{routes,             }\CommentTok{// From the file called 'routes'}
+  \StringTok{"%d.  %s %s"}\NormalTok{,       }\CommentTok{// Match the pattern (integer) (string) (string)}
+  \NormalTok{&route_id,          }\CommentTok{// Store the value of integer to the variable route_id}
+  \NormalTok{departure_airport,  }\CommentTok{// Store the value of the first string to departure_airport}
+  \NormalTok{arrival_airport     }\CommentTok{// Store the value of the second string to arrival_airport}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+``Once you find a word followed by two digits, store the word in the following location in memory, and store the digits in this other location in memory.'' What's interesting isn't \emph{that} Rebecca used \texttt{fscanf()} to read through files like the list of airports. Any suitable solution for this project would need extract text patterns from source files, which \texttt{fscanf()} does. Rather, what's interesting is \emph{how} she uses \texttt{fscanf()} in her design.
+
+Rebecca's file-scanning logic never persistently stores the contents of the files it reads in. Rather, her program reads through files one line at a time, and it essentially can't process or act on airport/flight information not in the line currently being scanned. Instead, it's been designed to copy single patterns temporarily, then rewind the file back to the top and start reading in one-line-at-a-time again.
+
+What's consequential about Rebecca's design choice? Computationally, her code has to repeatedly open multiple files (or sometimes repeatedly open the same file multiple times) and scan lines one line at a time in order to coordinate information. So, the task of finding a one-stop flight between two cities becomes a series of repeated, one-line-at-a-time scans of external files:
+
+\hypertarget{fscanfPattern}{\label{fscanfPattern}}
+\begin{Shaded}
+\begin{Highlighting}[numbers=left,,firstnumber=20,]
+\KeywordTok{while}\NormalTok{(fscanf(airports, }\StringTok{"%s  %50[^}\CharTok{\textbackslash{}n}\StringTok{]"}\NormalTok{, airport_code, city) != EOF)   }\CommentTok{//scan for the departure code but not to the arrival code}
+  \NormalTok{\{}
+    \KeywordTok{if}\NormalTok{(airport_code != departure_input || airport_code != arrival_input)}
+      \NormalTok{\{}
+        \KeywordTok{while}\NormalTok{(fscanf(routes, }\StringTok{"%d.  %s %s"}\NormalTok{, &route_id, departure_airport, arrival_airport) != EOF)  }\CommentTok{//finds the name of the city of the departure airport}
+          \NormalTok{\{}
+            \KeywordTok{if}\NormalTok{(departure_input[}\DecValTok{0}\NormalTok{]==departure_airport[}\DecValTok{0}\NormalTok{] && departure_input[}\DecValTok{1}\NormalTok{]==departure_airport[}\DecValTok{1}\NormalTok{] && departure_input[}\DecValTok{2}\NormalTok{]==departure_airport[}\DecValTok{2}\NormalTok{])}
+              \NormalTok{\{}
+                \KeywordTok{if}\NormalTok{(arrival_airport[}\DecValTok{0}\NormalTok{] != arrival_input[}\DecValTok{0}\NormalTok{] || arrival_airport[}\DecValTok{1}\NormalTok{] != arrival_input[}\DecValTok{1}\NormalTok{] || arrival_airport[}\DecValTok{2}\NormalTok{] != arrival_input[}\DecValTok{2}\NormalTok{])}
+                  \NormalTok{\{}
+                    \NormalTok{strcpy(stop_code, arrival_airport);}
+                    \NormalTok{rewind(routes);}
+                    \NormalTok{departure_airport[}\DecValTok{0}\NormalTok{]=' ';}
+                    \NormalTok{departure_airport[}\DecValTok{1}\NormalTok{]=' ';}
+                    \NormalTok{departure_airport[}\DecValTok{2}\NormalTok{]=' ';}
+                    \NormalTok{arrival_airport[}\DecValTok{0}\NormalTok{]=' ';}
+                    \NormalTok{arrival_airport[}\DecValTok{1}\NormalTok{]=' ';}
+                    \NormalTok{arrival_airport[}\DecValTok{2}\NormalTok{]=' ';}
+                    \KeywordTok{while}\NormalTok{(fscanf(routes, }\StringTok{"%d.  %s %s"}\NormalTok{, &route_id, departure_airport, arrival_airport) != EOF)  }\CommentTok{//now searches for the place where the stop is the}
+                      \NormalTok{\{                                                                                      }\CommentTok{//depart airport and the arrival input is correct}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Scan the \textbf{airports} file one line at a time (line 20)
+\item
+  While scanning a given line containing an airport code/city pair, scan the file of pairwise airport \textbf{routes} one line at a time (line 24).
+\item
+  To find possible connection cities, scan the \textbf{routes} file one line at a time again (line 38)
+\item
+  If a route matches, scan the \textbf{flights} file one line at a time to verify whether the time/day constraints are acceptable (one of the following lines depending on the chosen day: 52, 79, 106, 134, 162, 190, 218).
+\end{enumerate}
+
+Rebecca's code is both visually and computationally complex. The multiply-nested blocks can make it difficult for a human reader (or grader) to follow the code flow, which may have made it challenging for Rebecca to debug her own work. Moreover, nested for- and while-loops increase dimensions of complexity in Rebecca's program---what computer scientists would call the ``Big-O'' characterization of her program \citep{cormen_introduction_1990}. For every nesting of a scan loop (there are 4 in her submitted code) Rebecca increases by 1 the degree of a polynomial that represents the execution time of her program. So, from a performance perspective, Rebecca's design suffers a trade-off in that with each invocation of a scanning loop, we see a geometric increase in the time complexity of her program. But, Rebecca's code also has a particular kind of elegance.
+
+\subsection{Rebecca's file-scanning solution has elegant constant space complexity}\label{rebeccas-file-scanning-solution-has-elegant-constant-space-complexity}
+
+While Rebecca's design isn't optimized for speed, it uses drastically less memory than do other solutions (including the instructor's official solution). What Rebecca could have done (and what I'll discuss in a later section) is read the entire contents of all data files into RAM. I'll call that approach an \emph{in-memory} solution, because all of the flight information is loaded into memory. Instead, her solution stores only a handful of lines (4 at most) in memory at a time, leaving the rest \emph{on-disk}. An analogy helps clarify the difference.
+
+If we think of the input files like a giant grocery list, an in-memory solution would be like having to put each list item into your cart before you go to check out. The longer the list gets, the bigger cart you'd need to collect every item on the list before checking out. Crucially, everything has to go into the cart before it can be purchased. If the grocery list very long, you may need multiple carts. If the list gets absurdly long you may even exhaust all carts in the store and still find yourself with an unfinished list.
+
+Rebecca's \emph{on-disk} solution would be like restricting yourself to a single, small grocery basket, but taking as many trips as you need to get all the itmes from the store shelves to the checkout conveyor belt. She can only ferry just a few groceries each go-around. But no matter how long the list gets, she'll never need more than a single handbasket to get all her items to checkout. She just takes more trips.
+
+The reason for comparing an in-memory to an on-disk solution is that design work always operates under constraints. Sometimes (say, in cloud computing applications) RAM is cheap, and a solution that loads all data into RAM may be optimal. But, there are also applied situations (biomedical implants, space technology) where memory is expensive and possibly not even upgradeable. In those contexts, a constant-space solution like Rebecca's might be ideal, because designing for the long-term means assuming a computer we launch into space now and can't ever touch again for years or decades.
+
+But, while we know the structure of Rebecca's design, we know almost nothing about its context. Our analytical method---examining only the code in front of us---forecloses possibilities of recovering those details. We lack access to activity history: we don't know \emph{how} Rebecca ended up structuring her code this way, nor do we know \emph{why}. And, we lack access to conceptual information: we can't know from just this code whether Rebecca knew or understood the kind of complexity and performance trade-off she made. We also can't know with certainty how she felt about the consequences of the decision. We know only that her final submitted design used multiply-nested scanning loops.
+
+\subsection{Rebecca's file-scanning solution ignores an assignment directive}\label{rebeccas-file-scanning-solution-ignores-an-assignment-directive}
+
+For each of the four projects during the semester, the instructor gave students what he called a ``design brief.'' Each design brief outlined the problem to be solved as well as any constraints imposed on students' solutions. For example, in the flights project, students' programs had to reject candidate multi-stop trip routes if the layover time would be too short (under 30 minutes) or too long (more than two hours). But, in addition to what I might call \emph{user-centered constraints} (viz., reject multi-stop trips that would have grueling layovers), the instructor also directed students on \emph{implementation details}: ways their program should work at a technical level that would be invisible to the user.
+
+Specifically, the design brief discusses how to handle reading in data from the files provided for the project:
+
+\begin{quote}
+To parse the 3 airline flight database files, you will need to declare arrays that will receive all the data. For the purposes of determining array sizes, you may assume there will never be more than 100 airports in the ``airports.txt'' file, 500 route IDs in the ``routes.txt'' file, and 3000 flights in the ``flights.txt'' file. (Flights Database class assignment, 2012)
+\end{quote}
+
+Presumably, from the instructor's directive, one ``will need'' to have an array of airports (mapping 3-letter code to full airport name), an array of routes (mapping a pair of airports to a unique routing number), and an array of flights (mapping unique flight numbers to a collection of information about that flight). And, to fulfill that need as stated, a student's code would have to:
+
+\begin{itemize}
+\tightlist
+\item
+  Create arrays by declaring them as variables
+\item
+  Store data from the files in array entries using variable assignment
+\item
+  Access the arrays to fetch relevant flight data
+\end{itemize}
+
+Rebecca creates no arrays. Instead, her code attempts to accomplish the same task that an array would, but she doesn't use a global data structure at all.\footnote{That's not entirely true. Technically, variables including \texttt{route\_id} and \texttt{flight\_number} are globally-acessible within the scope of the \texttt{one\_stop\_flight()} function. But, those variables are integers. There's no way the variables Rebecca declares could store all the data required in-memory.} A consequence of Rebecca's approach is that she has no easy way to refer to arbitrary airports, routes, or flights in her code, since her program has no mechanism to store such information persistently. A second consequence is that since she avoids persistent data structures, the complex work her program does to read through each line of each file, in some cases multiple times (above) is repeated every single time a user initiates a query.
+
+Given Rebecca's particular design pattern, we asked the question of whether she may have tried creating arrays before ultimately settling on her scanning-loop solution. The answer, as far as we can tell, is no. We analyzed the history of both Rebecca's main() method and her one-stop flight code module. Our search revealed that no snapshots exist in which Rebecca created arrays---either through dynamically allocating them (through heap memory), or, as the assignment recommended, creating overprovisioned fixed-size arrays on the stack. In other words, at the limit of resolution of our data collection, and within the scope of the code Rebecca typed, she never tried an array solution.\footnote{If Rebecca had tried an array solution and compiled---whether error-free or not---our automated snapshot collection system would have captured it.}
+
+Curiously, we have evidence \emph{outside} of Rebecca's code that suggests she knew, and even perhaps had seen, an array-based design solution. In a file called ``notes.txt'' contained in her project directory, we see the following lines:
+
+\begin{verbatim}
+think about using: sscanf, array of pointers
+
+
+his header file!!!
+-max line lenght: 2000
+-max string lenght: 100
+-defined true and false
+-max airports: 100
+-max routes: 500
+-max flights: 3000
+-min connect time: 60.0
+-max connect time: 120
+-daily maxk: 254  ???
+-char airports[max airports][4]
+-char aiport_cities[max airports][max string lenght]
+-he has 3D array for routes.... char routes[max routes][2][4]
+\end{verbatim}
+
+(notes.txt file, created March 19, 2012)
+
+The context of the file is not entirely apparent, because we did not observe lecture on March 19, the day the notes.txt file entered Rebecca's snapshot history. Also, whether ``his'' refers to the instructor or perhaps another classmate is unclear. ---What seems clear, however, is that Rebecca was responding to items she had seen in someone else's header file. Consequently, putting together the notes.txt file with Rebecca's final code submission reveals Rebecca was exposed to a design solution involving arrays, but never implemented it in her code. Thus, a lingering and consequential question remains unanswered: why did Rebecca adopt a solution that defied the directions of the assignment, especially when she'd seen part of a potential design solution that did use arrays?
+
+We return to this question in a later section, but first we turn our attention to another unusual feature of Rebecca's work: seven-fold repetition of code.
+
+\subsection{Rebecca repeats the same chunk of code seven times}\label{rebecca-repeats-the-same-chunk-of-code-seven-times}
+
+A second key feature of Rebecca's code is the almost identical repetition of a single 23-line code chunk seven times (lines 50--240). Because users can run queries by choosing a day to fly (and some flights only run on certain days), students' code must be able to handle each of the seven possible days for when a user would want to fly. In principle, Rebecca's code achieves just that.\footnote{I say ``in principle'' because Rebecca's code would not compile on my machine. So, in practice, her design contains compile-time errors (and possibly run-time errors). Nevertheless, her code provides ample evidence that she was attempting conditional logic to handle each possible day.} In practice, her code creates seven different conditional branches---one branch for each day of the week---where the code within each branch is duplicated.
+
+Figure 2-1 represents a side-by-side delta-comparison of two such day-specific branches of code. Lines 158--184 of Rebecca's original code are on the left; lines 214--241 are on \includegraphics{media/media/image3.png}the right, and in the figure lines have been renumbered (from 1) to ease comparison. In this delta view, lines that differ are highlighted in pale red, and characters that differ are shown in bold red.
+
+The two code blocks demonstrate just how much code is duplicated for handling user input based on days of the week. Between these two chunks there are only three differences (lines 1, 3, and 11): all of the references to day are changed from 5 (on the left) to 7 (on the right).\footnote{In the text-input files students were given, days of the week were represented as integers (rather than the perhaps more familiar ``Tuesday,'' ``Wednesday,'' etc.).} Moreover, the changes from block to block are patternistic and predictable: the first line of the block is a non-functioning comment, the third line of each block just checks whether the rest of the block should run, while the eleventh line of each block compares an array entry to the day of interest. Everything else is duplicate boilerplate that is essentially repeated 7 times; once for each day of the week. I say ``essentially repeated'' because, as we'll now explore, there are minute differences between some of the code chunk's seven incarnations.
+
+Repeating code as Rebecca has done can be problematic because each repetition multiplies the number of places she has to examine and modify if she wants to introduce a systematic change. If, for example, Rebecca wanted to change the internal names she gives to scanned-in variables, she has to make that change in seven different blocks of code: once for each of the seven days of the week she's hard-coded. And, since any given change may inadvertently introduce an error, increasing the number of places she repeats code also makes the code that much more vulnerable to inconsistently-applied changes.
+
+Indeed, a repeated, inconsistently-applied scan pattern change seems to be exactly what occurred in Rebecca's code history. Between 10:04pm and 10:37pm on March 26, Rebecca introduced a large set of changes to the one-stop flight module. Among those changes Rebecca added the \texttt{d\textbackslash{}\_letter} file-scanning-parameter to what would become line 218, but not to what would become line 190. We can reasonably infer Rebecca added this parameter as a way of capturing the ``am'' or ``pm'' specifier given the input file's format. Moreover, we can verify through Git that once introduced, Rebecca's omission of the parameter was never modified or corrected. The problem percolated through to her final submitted code.
+
+\section{Analysis Augmenting Code Snapshots with Interview Data}\label{analysis-augmenting-code-snapshots-with-interview-data}
+
+In the previous section, I described two unusual features of Rebecca's code for searching one-stop flights:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Her use of multiply nested loops that scan through source information files \emph{without} storing the information in those files persistently in long-term memory
+
+  The code for handling a user's chosen day, which was essentially the same block of code copied and pasted 7 times
+\end{enumerate}
+
+In this section, I offer explanations of Rebecca's design choices by interpreting data from over five hours of clinical interviews I conducted with her. I draw from those interviews to explain how design decisions that might seem unusual to an expert in fact grew rather unproblematically (for Rebecca) as ways of deliberately transferring prior knowledge and designs (which explains feature 1) or coping with a constraint to produce a reliable solution she could trust (which explains feature 2).
+
+\subsubsection{Rebecca employed fscanf loops because she was deliberately reusing from an Basic Programming Assignment.}\label{rebecca-employed-fscanf-loops-because-she-was-deliberately-reusing-from-an-basic-programming-assignment.}
+
+Rebecca's choices become easier to understand when you consider what she said in the interview. When Rebecca initially saw the flights database project, her first reaction was ``this is just a lot like our fantasy football project that we did last year'' (Interview, March 16, 2012).\footnote{Transcript conventions are shown in Appendix 1.} But, the previous fantasy football project was easier because all of the information she needed was in one file. Flights database, by comparison, fractured necessary information across multiple input files.
+
+Since Rebecca said the fantasy football project was like an easier version of flights database, I asked whether she tried making this project more like the easier one. Her response was an emphatic ``Oh yeah! Definitely!'' (Interview, March 16, 2012). She said ``as soon as we got this project I was like, ah! fantasy football! I'm just gonna go and see how much code I can rework from that and like, use /mmhmm/ in this project'' (Interview, March 16, 2012). Specifically, Rebecca went back to her fantasy football code ``and I was looking at how I scanned in the information from the files, cuz, we haven't really done anything like that this semester. Uh, scanning in from files before---'' (Interview, March 16, 2012). Since the fantasy football draft project was the last in which she'd needed to do file-scanning, she ``just, uh, went back to check how I did that /mmhmm/ and then, if I could I copied, but because a lot of the variables were different, uh, like these were more var---less, less variables, and more strings than last year /mmhmm/ uh, I just retyped it out. I just looked at how it was similar'' (Interview, March 16, 2012).
+
+My first opportunity to discuss Rebecca's one-stop flight work was on March 16, 2012, in what would be her third of five interviews that semester. This interview was conducted very early into the time window for the Flight Database project, before Rebecca had done the bulk of her coding. We were discussing her prospective design plans. As Rebecca began explaining how the logic for a one-stop flight search was supposed to work, she described what she saw as one of the central difficulties of the project: the relevant information for answering user queries was spread across multiple files (Interview, March 16, 2012).
+
+As Rebecca explained, something as simple as finding a flight from, say, JFK to BWI ``involves scanning through multiple files, because it's not like one file that has everything conveniently like, there'' (Interview, March 16, 2012). When I asked what would make things easier if, hypothetically, all the information she needed were in one file, Rebecca responded by appealing to a previous assignment from last semester. In Rebecca's first-semester programming course (Basic Programming for Engineers), one of several multi-week projects had students create a system for users to conduct a fantasy football draft. The project involved, among other things, topics related to basic file management in the C language, including how to read in a file from disk (Interview, March 16, 2012). Rebecca explained:
+
+Rebecca: Um, like, cuz when we first got this project, uh, I actually was thinking ``oh, well this is just a lot like our fantasy football project we did last year.'' /Huh/ We uh, had to scan in, uh, someone had to enter like ``I wanna pick a quarterback,'' so then you had to scan in and go and look for all the quarterbacks in the file and say ``OK, this is the quarterback'' and everything. But, in that project we only had the one file that had everyone listed: quarterbacks, runningbacks, wide receiver, in one file. And all the information you needed there /Mmhmm/ So, you could just get it all and compare it all at once with one scanf /mmm/ whereas this you have to, take, uh, you scan in the flights, ah, the flights file. So, then you find the flight number. You have to save the ID from that flight number, use that ID to scan into the routes file /mmhmm/ and then save the routes information and then print it out with the flights information. (Interview, March 16, 2012)
+
+Rebecca's comments suggest she saw a coupling between the arrangement of the input information and the structure (and complexity) of the computational logic needed to process it. When one fantasy football file contained all of the relevant information (player, position, team, etc.) it could be read in and processed one line at a time. When information was fractured across files (pairs of airport codes in one file, full spell-outs of airport names in another, for example), Rebecca felt she'd need to use information shared across files (such as a route ID) to coordinate a scan across one file with a scan across another (and possibly an additional scan across a third file) before she would have all the necessary information and computations to return a result.
+
+I was interested in the connections Rebecca saw across projects, so I pressed on. When I asked whether she thought about trying to make this project like her fantasy football project, her answer was an emphatic ``Oh yeah, definitely!'' As she elaborated:
+
+Rebecca: That was like, as soon as we got this project I was like, ah! fantasy football! I'm just gonna go and see how much code I can rework from that and like, use /mmhmm/ in this project. And, my whole main file, like all those NULL checks and everything, I mean they're really simple to write, but I just copied `em and put `em there, cuz, we had the same thing. /Mmhmm/ Um, just changed, like, the names of the files.
+
+As she explained, ``reading in files'' was a topic covered extensively in Basic Programming---the first course of the sequence---but they hadn't talked much about it in this semester's course.
+
+Rebecca: Because \[reading in from files\] was a big \[Basic Programming\] topic we hadn't talked about it much. /Yup/ So, I just, uh, went back to check how I did that /mmhmm/ and then, if I could I copied, but because a lot of the variables were different, uh, like these were more var---less, less variables, and more strings than last year /mmhmm/ uh, I just retyped it out. I just looked at how it was similar. (Interview, March 16, 2012)
+
+I started doing the scanning, and then I realized like, ``I do not have all the information I need in this one file,'' so that's when I realized I would have to make the dummy variable to compare to the other file, so, which, there was no other file in the, um, fantasy football one. So that's when I realized, I was like OK, so, there's gonna be other stuff that I'm gonna have to do, and /mmhmm/ I mean, I can still kinda compare cuz it's still scanning files /yup/, but the idea of the dummy variable and all that, that would not have come from fantasy football, so /sure/.
+
+In sum, then, Rebecca's repeated, nested scan loops were a structure she deliberately borrowed from a previous semester's project. By her telling, what seemed obvious was that ``scanning in from files'' was a topic she'd already covered, which meant she'd already developed a workable solution for how to solve that problem. Thus, she saw the problem of how to coordinate airport information from different files as a new instance of the old problem of reading information in from one file. Her flight database work, accordingly, tried opportunistically adapting a previously working solution to fit the current circumstances.
+
+\subsubsection{Rebecca repeated code because she wanted to re-use functionality she could trust}\label{rebecca-repeated-code-because-she-wanted-to-re-use-functionality-she-could-trust}
+
+By our interview on April 6, Rebecca had already completed and submitted her code for the flights database project. When I looked at the final form of her code for finding one-stop flights I noted an unusual pattern described in section 2.4.3 above: she had a code chunk repeated almost character-for-character 7 times. In the interview, this section is what Rebecca referred to as ``my obnoxiously long part of my code'' (Interview, April 6, 2012):
+
+Rebecca: So, the way I did it was really long and probably, there was probably like a much easier way, but I just did a giant if---if statements \{swings cursor from line 50 to line 63\} If they wanted to fly on Monday /OK/ I went through and checked to see if the route ID was the same \{wiggles cursor across line 54\}, and if it did, I went through to che---uh, I made a check\_days function \{wiggles cursor across line 60\} uh, I ended up commenting that out cuz I didn't end up /mmhmm/ finishing it. But, uh, my check\_days function worked, it just didn't work completely with the code /OK/ (Interview, April 6, 2012)
+
+As I scrolled the screen to look at each of the repeated blocks of code, Rebecca elaborated:
+
+Rebecca: And this is why my code, I feel like, is not uh, concise enough, or, I don't really, I forget the word they use, but uh /\{inaudible\}/ it's very long because I couldn't figure out if I should do a while loop or whatever /Uh-huh/ But, so I was just like, I know this way should work if I get everything else right, that uh, just go through, if input's 1, if input's 2 and just do the same thing in each of `em just /Mmmhmm/ check for, ``oh, if days is 2, if days is 1'' instead of, like---Cuz I probably could have done, like, maybe a giant while loop, um, to try and, and if, while, inputs something, uh, then you check to see whatever i is. But, I could, I didn't---couldn't figure out how that would work, so I just did the same thing six times.
+
+Interviewer: So, in, in each one of these it's like, looks, and I'm not sure about this, but it looks like the way you wrote it---so this \{highlights line 79\} is pretty much the same in all of them, right? /Yes/
+
+Interviewer: So's this one \{highlights line 81\} /Yes/ this one \{highlights line 83\} Here's where it's different \{highlights line 85\}
+
+Rebecca: Yes, because it just checks if it's a 2 instead of a 1.
+
+Interviewer: OK. Um. /And then everything else is still the same/ Layover's still the same. OK.
+
+Rebecca: Yeah. So that's why it's prob---it's not, uh, the neatest code or whatever, because it's the same thing six times. (Interview, April 6, 2012)
+
+Given Rebecca's assertions that her code wasn't neat, I asked what, if anything she might change if she hypothetically had another week to work on the project.
+
+Rebecca: Um, first I'd try and get it to make sure it worked completely /Ahh, OK, yeah/ this way, \{laughs\}, uh, and then, if I had the week after that whatever, I'd probably go through and see if I could figure out a way to make it concise-r because he likes uh, neat, as, like, code that's, uh, easy for the user to see /uh-huh/ I guess. Uh, I forget what, I keep forgetting what the word he used was at the beginning of the year, but uh, just very concise and, uh, this is \[a\] very expanded \{laughs\} way of coding, but, it made sense to me at the time and I was just like ``I just want something that makes sense right now.'' /Right/ So, that I can actually work with and have an idea.
+
+Interviewer: Um, OK. So, so it would take you some extra thinking to figure out /Mmmhmm/ how to break this down into /Yes/ smaller stuff /smaller code/ Do you feel like you've had a lot of practice doing that, or like?
+
+Rebecca: Uh, a little. Like, but, a lot of times in \[Basic Programming\] they didn't really mention too much about being concise. They were just like ``if you can do it, do it'' \{laughs\} /OK/ So I usually stuck to what made sense to me /Right/ uh, to turn the projects in. (Interview, April 6, 2012)
+
+In summary, Rebecca's ``expanded way of coding'' was a way of expressing ideas in code that, in her own words, ``made sense'' to her. Moreover, her Basic Programming course seemed, to her, to set expectations that functionality comes first; ``neatness'' second. If she hypothetically had more time to work on the project, her first priority would be to get her existing code working. Consequently, Rebecca's repetition of code can be understood as a kind of pragmatic solution to a difficult problem: choosing which computational techniques were best for accomplishing a complex goal. Moreover, her approach was shaped by the fact that her Basic Programming course historically valued a philosophy of ``if you can do it, do it'' (Interview, April 6, 2012). Ultimately, those factors seem to be what led Rebecca to choose repeating code that made sense to her over the difficult-to-envision alternative of a ``giant while loop.''

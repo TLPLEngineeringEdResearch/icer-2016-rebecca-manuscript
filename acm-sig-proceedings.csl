@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" default-locale="en-US">
   <info>
-    <title>ACM SIG Proceedings ("et al." for 15+ authors)</title>
-    <id>http://www.zotero.org/styles/acm-sig-proceedings-long-author-list</id>
-    <link href="http://www.zotero.org/styles/acm-sig-proceedings-long-author-list" rel="self"/>
+    <title>ACM SIG Proceedings ("et al." for 3+ authors)</title>
+    <id>http://www.zotero.org/styles/acm-sig-proceedings</id>
+    <link href="http://www.zotero.org/styles/acm-sig-proceedings" rel="self"/>
     <link href="http://www.acm.org/sigs/publications/proceedings-templates" rel="documentation"/>
     <author>
       <name>Naeem Esfahani</name>
@@ -51,7 +51,7 @@
       <text variable="citation-number"/>
     </layout>
   </citation>
-  <bibliography entry-spacing="0" second-field-align="flush" et-al-min="15" et-al-use-first="1">
+  <bibliography entry-spacing="0" second-field-align="flush" et-al-min="3" et-al-use-first="1">
     <sort>
       <key macro="author"/>
       <key variable="title"/>

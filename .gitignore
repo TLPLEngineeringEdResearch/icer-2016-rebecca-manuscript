@@ -46,3 +46,5 @@ manuscript.pdf
 *.synctex.gz(busy)
 *.pdfsync
 
+
+out/paper.pdf
