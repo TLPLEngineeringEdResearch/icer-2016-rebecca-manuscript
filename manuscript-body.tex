@@ -3,7 +3,7 @@
 A growing trend in computer science education research is the collection and analysis of code snapshot data--records of the state of and changes to students' code as they develop it \cite{jadud_methods_2006,rodrigo_analyzing_2009,spacco_marmoset_2006}. Though specific implementations differ, the general strategy in such projects is that a student event (typically compiling code or saving a file) triggers a procedure that creates a record containing the entire content of all of a student's relevant files, as well as associated metadata (time of save/compilation, for example, and any compiler errors that may have been generated). Mining data from such snapshotting systems has led to large-scale documentation of common student errors \cite{spacco_marmoset_2006}, the development of compile-time detectors to catch common student errors \cite{spacco_software_2005}, and the proposal of formative assessment models to predict student success \cite{jadud_methods_2006,tabanao_predicting_2011}. Building on existing momentum, some researchers are actively pushing for a continued scale-up of how we collect code snapshot data. One current proposal even calls for creating an international database by collecting snapshot data from thousands of introductory programming students worldwide \cite{kolling_building_2012}.
 
 What's common to these threads of research is how they mine the data. In
-most applications of code snapshot\footnote{What I call ``code
+most applications of code snapshot\footnote{What we call ``code
   snapshot'' research may be more formally called ``online protocol''
   research \cite{jadud_methods_2006,rodrigo_analyzing_2009}. ``Online'' here isn't mean to mean
   the sense of globally-connected computers, but rather that student
@@ -122,10 +122,10 @@ teaching and learning.
 The data presented in this case are taken from an ongoing IRB-approved
 study of undergraduate electrical engineering majors undertaken at
 \emph{Flagship State}, a large, public research institution on the east
-coast. For two semesters, I have followed a total of 10 students taking
+coast. For two semesters, we followed a total of 10 students taking
 ``Intermediate Programming Concepts for Engineers.'' It is the second of
 a required two-semester course sequence in programming.\footnote{Hereafter,
-  I use ``Intermediate Programming'' to refer to the second course and
+  we use ``Intermediate Programming'' to refer to the second course and
   ``Basic Programming'' to refer to the first.} Students can (and some
 do) place out of Basic Programming via AP Computer Science credit, but
 all Electrical and Computer Engineering students must take Intermediate
@@ -163,8 +163,8 @@ number. Crucially, in order to be able to respond to user queries
 students would need to build a program that could coordinate information
 across all three files to return an answer.
 
-My analysis details the work of Rebecca, a female first-year electrical
-engineering major. I focus specifically on Rebecca's code for finding
+Our analysis details the work of Rebecca, a female first-year electrical
+engineering major. We focus specifically on Rebecca's code for finding
 ``one-stop'' flights, which the instructor defined as ``all pairs of
 flights that route the user between the departure and arrival airports
 with exactly 1 stop (i.e., a one-connection flight)'' (Flights Database
@@ -181,33 +181,33 @@ accounts of students' programming activity that explain the form and
 evolution of their code on a design project? The focused form of that
 challenge for this study is ``how can we understand the unconventional
 design choices embedded in Rebecca's one-stop flight code?'' To answer
-that question, my study draws from three data streams: ethnographic
+that question, this study draws from three data streams: ethnographic
 observation, clinical interviewing, and code snapshot analysis.
 
-For two semesters, I ethnographically embedded myself in the same
-instructor's section of Intermediate Programming. My aim throughout was
+For two semesters, one author was ethnographically embedded in the same
+instructor's section of Intermediate Programming. His aim throughout was
 to see what students see in terms of course material, assignment
-directives, and instruction. In fall 2011 I observed approximately 50\%
-of the course lectures. I also independently completed all class
+directives, and instruction. In fall 2011 he observed approximately 50\%
+of the course lectures. He also independently completed all class
 homeworks and three out of the four course projects to more fully
-understand the course's assessments. In spring 2012 I continued
+understand the course's assessments. In spring 2012 he continued
 attending lectures, though less frequently, and began attending select
 TA-led discussion sections. During both lectures and discussion sections
-I took field notes while recording ambient audio using a LiveScribe
+he took field notes while recording ambient audio using a LiveScribe
 Pulse pen.
 
 Rebecca was one of four students (three female, one male) willing and
 able to participate in a series of 1-hour outside-of-class clinical
 interviews during the spring 2012 semester.\footnote{In total, roughly
-  30 students responded to my initial in-class solicitation to be
-  contacted by email about my study. Of the students I emailed,
-  approximately 8 students responded to my emails to schedule interview
+  30 students responded to the initial in-class solicitation to be
+  contacted by email about the study. Of the students emailed,
+  approximately 8 students responded to the emails to schedule interview
   times. Of those 8, only four students were able to successfully find
-  interview time slots that fit our respective schedules.} I interviewed
-Rebecca five times, and in typical interviews I split time between
+  interview time slots that fit our respective schedules.} Rebecca was interviewed
+ five times, and typical interviews split time between
 asking about her experiences in the course and giving her time in the
-interview to work on her project code. During each interview, I
-simultaneously used:
+interview to work on her project code. During each interview,
+simultaneously used were:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -222,21 +222,21 @@ simultaneously used:
 \end{enumerate}
 
 The final component of data gathering is modeled after Jadud's (2006)
-system for capturing students' code. My colleagues and I developed
+system for capturing students' code. We developed
 software, built around the open-source version control system called
 Git, that effectively creates an entire copy of a student's code---what
 we call ``snapshots''---every time students invoke the compiler on their
 code. Our software then sends those snapshots to a secure,
 researcher-accessible server in real-time as they're created.
-Consequently, I could plan each interview with Rebecca around
+Consequently, he could plan each interview with Rebecca around
 up-to-the-minute knowledge of her work---in some cases work she had
-completed just hours before the interview---and tailor my interview
+completed just hours before the interview---and tailor interview
 questions to emerging patterns in her code. In total, Rebecca's work
 resulted in 958 compilation snapshots over the course of the semester.
 
 \section{Analyzing only the code Rebecca turned in}\label{analyzing-only-the-code-rebecca-turned-in-what-an-instructor-might-see}
 
-In this phase of analysis, I restrict data to only the final version of \texttt{one\_stop\_flight.c} Rebecca submitted as part of her project. This restriction is important because of the data that gets left out. We're forced to see Rebecca's design work the way her instructor did when he graded it: as a final product. The submitted code contains little---if any---evidence of design iteration. And, we have almost no access to streams of activity (inscriptional, gestural, verbal, and otherwise material) that would help us understand Rebecca's early stage design \citep{petre_software_2014}. Indeed, other than the code itself, the only artifacts that actually carry Rebecca's voice in this phase of analysis are the comments she places in her code. Put another way: restricting our scope to just code---and only the final submitted code at that---denies the analyst access to the channels of ``talk, embodied action, and inscription'' involved in design work \citep[ p.~179]{hall_disrupting_2002}.
+In this phase of analysis, we restrict data to only the final version of \texttt{one\_stop\_flight.c} Rebecca submitted as part of her project. This restriction is important because of the data that gets left out. We're forced to see Rebecca's design work the way her instructor did when he graded it: as a final product. The submitted code contains little---if any---evidence of design iteration. And, we have almost no access to streams of activity (inscriptional, gestural, verbal, and otherwise material) that would help us understand Rebecca's early stage design \citep{petre_software_2014}. Indeed, other than the code itself, the only artifacts that actually carry Rebecca's voice in this phase of analysis are the comments she places in her code. Put another way: restricting our scope to just code---and only the final submitted code at that---denies the analyst access to the channels of ``talk, embodied action, and inscription'' involved in design work \citep[ p.~179]{hall_disrupting_2002}.
 
 \begin{figure}[htbp]
 \centering
@@ -275,7 +275,7 @@ Rebecca's code is both visually and computationally complex. The multiply-nested
 
 \subsection{Rebecca's file-scanning solution has elegant constant space complexity}\label{rebeccas-file-scanning-solution-has-elegant-constant-space-complexity}
 
-While Rebecca's design isn't optimized for speed, it uses drastically less memory than do other solutions (including the instructor's official solution). What Rebecca could have done (and what I'll discuss in a later section) is read the entire contents of all data files into RAM. I'll call that approach an \emph{in-memory} solution, because all of the flight information is loaded into memory. Instead, her solution stores only a handful of lines (4 at most) in memory at a time, leaving the rest \emph{on-disk}. An analogy helps clarify the difference.
+While Rebecca's design isn't optimized for speed, it uses drastically less memory than do other solutions (including the instructor's official solution). What Rebecca could have done (and what we'll discuss in a later section) is read the entire contents of all data files into RAM. We'll call that approach an \emph{in-memory} solution, because all of the flight information is loaded into memory. Instead, her solution stores only a handful of lines (4 at most) in memory at a time, leaving the rest \emph{on-disk}. An analogy helps clarify the difference.
 
 If we think of the input files like a giant grocery list, an in-memory solution would be like having to put each list item into your cart before you go to check out. The longer the list gets, the bigger cart you'd need to collect every item on the list before checking out. Crucially, everything has to go into the cart before it can be purchased. If the grocery list very long, you may need multiple carts. If the list gets absurdly long you may even exhaust all carts in the store and still find yourself with an unfinished list.
 
@@ -287,7 +287,7 @@ But, while we know the structure of Rebecca's design, we know almost nothing abo
 
 \subsection{Rebecca's file-scanning solution ignores an assignment directive}\label{rebeccas-file-scanning-solution-ignores-an-assignment-directive}
 
-For each of the four projects during the semester, the instructor gave students what he called a ``design brief.'' Each design brief outlined the problem to be solved as well as any constraints imposed on students' solutions. For example, in the flights project, students' programs had to reject candidate multi-stop trip routes if the layover time would be too short (under 30 minutes) or too long (more than two hours). But, in addition to what I might call \emph{user-centered constraints} (viz., reject multi-stop trips that would have grueling layovers), the instructor also directed students on \emph{implementation details}: ways their program should work at a technical level that would be invisible to the user.
+For each of the four projects during the semester, the instructor gave students what he called a ``design brief.'' Each design brief outlined the problem to be solved as well as any constraints imposed on students' solutions. For example, in the flights project, students' programs had to reject candidate multi-stop trip routes if the layover time would be too short (under 30 minutes) or too long (more than two hours). But, in addition to what we might call \emph{user-centered constraints} (viz., reject multi-stop trips that would have grueling layovers), the instructor also directed students on \emph{implementation details}: ways their program should work at a technical level that would be invisible to the user.
 
 Specifically, the design brief discusses how to handle reading in data from the files provided for the project:
 
@@ -338,11 +338,11 @@ We return to this question in a later section, but first we turn our attention t
 
 \subsection{Rebecca repeats the same chunk of code seven times}\label{rebecca-repeats-the-same-chunk-of-code-seven-times}
 
-A second key feature of Rebecca's code is the almost identical repetition of a single 23-line code chunk seven times (lines 50--240). Because users can run queries by choosing a day to fly (and some flights only run on certain days), students' code must be able to handle each of the seven possible days for when a user would want to fly. In principle, Rebecca's code achieves just that.\footnote{I say ``in principle'' because Rebecca's code would not compile on my machine. So, in practice, her design contains compile-time errors (and possibly run-time errors). Nevertheless, her code provides ample evidence that she was attempting conditional logic to handle each possible day.} In practice, her code creates seven different conditional branches---one branch for each day of the week---where the code within each branch is duplicated.
+A second key feature of Rebecca's code is the almost identical repetition of a single 23-line code chunk seven times (lines 50--240). Because users can run queries by choosing a day to fly (and some flights only run on certain days), students' code must be able to handle each of the seven possible days for when a user would want to fly. In principle, Rebecca's code achieves just that.\footnote{We say ``in principle'' because Rebecca's code would not compile on our machine. So, in practice, her design contains compile-time errors (and possibly run-time errors). Nevertheless, her code provides ample evidence that she was attempting conditional logic to handle each possible day.} In practice, her code creates seven different conditional branches---one branch for each day of the week---where the code within each branch is duplicated.
 
 Figure 2-1 represents a side-by-side delta-comparison of two such day-specific branches of code. Lines 158--184 of Rebecca's original code are on the left; lines 214--241 are on \includegraphics{media/media/image3.png}the right, and in the figure lines have been renumbered (from 1) to ease comparison. In this delta view, lines that differ are highlighted in pale red, and characters that differ are shown in bold red.
 
-The two code blocks demonstrate just how much code is duplicated for handling user input based on days of the week. Between these two chunks there are only three differences (lines 1, 3, and 11): all of the references to day are changed from 5 (on the left) to 7 (on the right).\footnote{In the text-input files students were given, days of the week were represented as integers (rather than the perhaps more familiar ``Tuesday,'' ``Wednesday,'' etc.).} Moreover, the changes from block to block are patternistic and predictable: the first line of the block is a non-functioning comment, the third line of each block just checks whether the rest of the block should run, while the eleventh line of each block compares an array entry to the day of interest. Everything else is duplicate boilerplate that is essentially repeated 7 times; once for each day of the week. I say ``essentially repeated'' because, as we'll now explore, there are minute differences between some of the code chunk's seven incarnations.
+The two code blocks demonstrate just how much code is duplicated for handling user input based on days of the week. Between these two chunks there are only three differences (lines 1, 3, and 11): all of the references to day are changed from 5 (on the left) to 7 (on the right).\footnote{In the text-input files students were given, days of the week were represented as integers (rather than the perhaps more familiar ``Tuesday,'' ``Wednesday,'' etc.).} Moreover, the changes from block to block are patternistic and predictable: the first line of the block is a non-functioning comment, the third line of each block just checks whether the rest of the block should run, while the eleventh line of each block compares an array entry to the day of interest. Everything else is duplicate boilerplate that is essentially repeated 7 times; once for each day of the week. We say ``essentially repeated'' because, as we'll now explore, there are minute differences between some of the code chunk's seven incarnations.
 
 Repeating code as Rebecca has done can be problematic because each repetition multiplies the number of places she has to examine and modify if she wants to introduce a systematic change. If, for example, Rebecca wanted to change the internal names she gives to scanned-in variables, she has to make that change in seven different blocks of code: once for each of the seven days of the week she's hard-coded. And, since any given change may inadvertently introduce an error, increasing the number of places she repeats code also makes the code that much more vulnerable to inconsistently-applied changes.
 
@@ -350,7 +350,7 @@ Indeed, a repeated, inconsistently-applied scan pattern change seems to be exact
 
 \section{Augmenting Code Snapshots with Interview Data}\label{analysis-augmenting-code-snapshots-with-interview-data}
 
-In the previous section, I described two unusual features of Rebecca's code for searching one-stop flights:
+In the previous section, we described two unusual features of Rebecca's code for searching one-stop flights:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -360,13 +360,13 @@ In the previous section, I described two unusual features of Rebecca's code for 
   The code for handling a user's chosen day, which was essentially the same block of code copied and pasted 7 times
 \end{enumerate}
 
-In this section, I offer explanations of Rebecca's design choices by interpreting data from over five hours of clinical interviews I conducted with her. I draw from those interviews to explain how design decisions that might seem unusual to an expert in fact grew rather unproblematically (for Rebecca) as ways of deliberately transferring prior knowledge and designs (which explains feature 1) or coping with a constraint to produce a reliable solution she could trust (which explains feature 2).
+In this section, we offer explanations of Rebecca's design choices by interpreting data from over five hours of clinical interviews conducted with her. We draw from those interviews to explain how design decisions that might seem unusual to an expert in fact grew rather unproblematically (for Rebecca) as ways of deliberately transferring prior knowledge and designs (which explains feature 1) or coping with a constraint to produce a reliable solution she could trust (which explains feature 2). Much of this section reflects a first-hand account of one author interviewing Rebecca and, so, is related in the first person.
 
 \subsubsection{Rebecca employed fscanf loops because she was deliberately reusing from an Basic Programming Assignment.}\label{rebecca-employed-fscanf-loops-because-she-was-deliberately-reusing-from-an-basic-programming-assignment.}
 
 Rebecca's choices become easier to understand when we consider what she said in  interviews about the code she wrote. My first opportunity to discuss that code was on March 16, 2012, in what would be her third of five interviews that semester. This interview was conducted very early into the time window for the Flight Database project, before Rebecca had done the bulk of her coding. We were discussing her prospective design plans. As Rebecca began explaining how the logic for a one-stop flight search was supposed to work, she described what she saw as one of the central difficulties of the project: the relevant information for answering user queries was spread across multiple files (Interview, March 16, 2012).
 
-As Rebecca explained, something as simple as finding a flight from, say, JFK to BWI ``involves scanning through multiple files, because it's not like one file that has everything conveniently like, there'' (Interview, March 16, 2012). When I asked what would make things easier if, hypothetically, all the information she needed were in one file, Rebecca responded by appealing to a previous assignment from last semester. In Rebecca's first-semester programming course (Basic Programming for Engineers), one of several multi-week projects had students create a system for users to conduct a fantasy football draft. The project involved, among other things, topics related to basic file management in the C language, including how to read in a file from disk (Interview, March 16, 2012). Rebecca explained:
+As Rebecca explained, something as simple as finding a flight from, say, JFK to BWI ``involves scanning through multiple files, because it's not like one file that has everything conveniently like, there'' (Interview, March 16, 2012). When asked what would make things easier if, hypothetically, all the information she needed were in one file, Rebecca responded by appealing to a previous assignment from last semester. In Rebecca's first-semester programming course (Basic Programming for Engineers), one of several multi-week projects had students create a system for users to conduct a fantasy football draft. The project involved, among other things, topics related to basic file management in the C language, including how to read in a file from disk (Interview, March 16, 2012). Rebecca explained:
 
 
 \begin{quote}
@@ -436,7 +436,7 @@ In summary, Rebecca's ``expanded way of coding'' was a way of expressing ideas i
 
 \section{Conclusion}
 
-Our interview with Rebecca corroborates the snapshot evidence that
+The interviews with Rebecca corroborate the snapshot evidence that
 Rebecca directly copied code from a prior project. Moreover, Rebecca's
 behavior of copying her old fantasy football code suggests several
 implications.
