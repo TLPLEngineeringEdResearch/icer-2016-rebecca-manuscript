@@ -234,7 +234,7 @@ completed just hours before the interview---and tailor my interview
 questions to emerging patterns in her code. In total, Rebecca's work
 resulted in 958 compilation snapshots over the course of the semester.
 
-\section{Analyzing only the code Rebecca turned in: What an instructor might see}\label{analyzing-only-the-code-rebecca-turned-in-what-an-instructor-might-see}
+\section{Analyzing only the code Rebecca turned in}\label{analyzing-only-the-code-rebecca-turned-in-what-an-instructor-might-see}
 
 In this phase of analysis, I restrict data to only the final version of \texttt{one\_stop\_flight.c} Rebecca submitted as part of her project. This restriction is important because of the data that gets left out. We're forced to see Rebecca's design work the way her instructor did when he graded it: as a final product. The submitted code contains little---if any---evidence of design iteration. And, we have almost no access to streams of activity (inscriptional, gestural, verbal, and otherwise material) that would help us understand Rebecca's early stage design \citep{petre_software_2014}. Indeed, other than the code itself, the only artifacts that actually carry Rebecca's voice in this phase of analysis are the comments she places in her code. Put another way: restricting our scope to just code---and only the final submitted code at that---denies the analyst access to the channels of ``talk, embodied action, and inscription'' involved in design work \citep[ p.~179]{hall_disrupting_2002}.
 
@@ -311,11 +311,10 @@ Rebecca creates no arrays. Instead, her code attempts to accomplish the same tas
 
 Given Rebecca's particular design pattern, we asked the question of whether she may have tried creating arrays before ultimately settling on her scanning-loop solution. The answer, as far as we can tell, is no. We analyzed the history of both Rebecca's main() method and her one-stop flight code module. Our search revealed that no snapshots exist in which Rebecca created arrays---either through dynamically allocating them (through heap memory), or, as the assignment recommended, creating overprovisioned fixed-size arrays on the stack. In other words, at the limit of resolution of our data collection, and within the scope of the code Rebecca typed, she never tried an array solution.\footnote{If Rebecca had tried an array solution and compiled---whether error-free or not---our automated snapshot collection system would have captured it.}
 
-Curiously, we have evidence \emph{outside} of Rebecca's code that suggests she knew, and even perhaps had seen, an array-based design solution. In a file called ``notes.txt'' contained in her project directory, we see the following lines:
+Curiously, we have evidence \emph{outside} of Rebecca's code that suggests she knew, and even perhaps had seen, an array-based design solution. In a file called ``notes.txt'' contained in her project directory and created March 19, 2012, we see the following lines:
 
 \begin{verbatim}
 think about using: sscanf, array of pointers
-
 
 his header file!!!
 -max line lenght: 2000
@@ -329,10 +328,9 @@ his header file!!!
 -daily maxk: 254  ???
 -char airports[max airports][4]
 -char aiport_cities[max airports][max string lenght]
--he has 3D array for routes.... char routes[max routes][2][4]
+-he has 3D array for routes....
+  char routes[max routes][2][4]
 \end{verbatim}
-
-(notes.txt file, created March 19, 2012)
 
 The context of the file is not entirely apparent, because we did not observe lecture on March 19, the day the notes.txt file entered Rebecca's snapshot history. Also, whether ``his'' refers to the instructor or perhaps another classmate is unclear. ---What seems clear, however, is that Rebecca was responding to items she had seen in someone else's header file. Consequently, putting together the notes.txt file with Rebecca's final code submission reveals Rebecca was exposed to a design solution involving arrays, but never implemented it in her code. Thus, a lingering and consequential question remains unanswered: why did Rebecca adopt a solution that defied the directions of the assignment, especially when she'd seen part of a potential design solution that did use arrays?
 
@@ -350,7 +348,7 @@ Repeating code as Rebecca has done can be problematic because each repetition mu
 
 Indeed, a repeated, inconsistently-applied scan pattern change seems to be exactly what occurred in Rebecca's code history. Between 10:04pm and 10:37pm on March 26, Rebecca introduced a large set of changes to the one-stop flight module. Among those changes Rebecca added the \texttt{d\textbackslash{}\_letter} file-scanning-parameter to what would become line 218, but not to what would become line 190. We can reasonably infer Rebecca added this parameter as a way of capturing the ``am'' or ``pm'' specifier given the input file's format. Moreover, we can verify through Git that once introduced, Rebecca's omission of the parameter was never modified or corrected. The problem percolated through to her final submitted code.
 
-\section{Analysis Augmenting Code Snapshots with Interview Data}\label{analysis-augmenting-code-snapshots-with-interview-data}
+\section{Augmenting Code Snapshots with Interview Data}\label{analysis-augmenting-code-snapshots-with-interview-data}
 
 In the previous section, I described two unusual features of Rebecca's code for searching one-stop flights:
 
@@ -366,27 +364,29 @@ In this section, I offer explanations of Rebecca's design choices by interpretin
 
 \subsubsection{Rebecca employed fscanf loops because she was deliberately reusing from an Basic Programming Assignment.}\label{rebecca-employed-fscanf-loops-because-she-was-deliberately-reusing-from-an-basic-programming-assignment.}
 
-Rebecca's choices become easier to understand when you consider what she said in the interview. When Rebecca initially saw the flights database project, her first reaction was ``this is just a lot like our fantasy football project that we did last year'' (Interview, March 16, 2012).\footnote{Transcript conventions are shown in Appendix 1.} But, the previous fantasy football project was easier because all of the information she needed was in one file. Flights database, by comparison, fractured necessary information across multiple input files.
-
-Since Rebecca said the fantasy football project was like an easier version of flights database, I asked whether she tried making this project more like the easier one. Her response was an emphatic ``Oh yeah! Definitely!'' (Interview, March 16, 2012). She said ``as soon as we got this project I was like, ah! fantasy football! I'm just gonna go and see how much code I can rework from that and like, use /mmhmm/ in this project'' (Interview, March 16, 2012). Specifically, Rebecca went back to her fantasy football code ``and I was looking at how I scanned in the information from the files, cuz, we haven't really done anything like that this semester. Uh, scanning in from files before---'' (Interview, March 16, 2012). Since the fantasy football draft project was the last in which she'd needed to do file-scanning, she ``just, uh, went back to check how I did that /mmhmm/ and then, if I could I copied, but because a lot of the variables were different, uh, like these were more var---less, less variables, and more strings than last year /mmhmm/ uh, I just retyped it out. I just looked at how it was similar'' (Interview, March 16, 2012).
-
-My first opportunity to discuss Rebecca's one-stop flight work was on March 16, 2012, in what would be her third of five interviews that semester. This interview was conducted very early into the time window for the Flight Database project, before Rebecca had done the bulk of her coding. We were discussing her prospective design plans. As Rebecca began explaining how the logic for a one-stop flight search was supposed to work, she described what she saw as one of the central difficulties of the project: the relevant information for answering user queries was spread across multiple files (Interview, March 16, 2012).
+Rebecca's choices become easier to understand when we consider what she said in  interviews about the code she wrote. My first opportunity to discuss that code was on March 16, 2012, in what would be her third of five interviews that semester. This interview was conducted very early into the time window for the Flight Database project, before Rebecca had done the bulk of her coding. We were discussing her prospective design plans. As Rebecca began explaining how the logic for a one-stop flight search was supposed to work, she described what she saw as one of the central difficulties of the project: the relevant information for answering user queries was spread across multiple files (Interview, March 16, 2012).
 
 As Rebecca explained, something as simple as finding a flight from, say, JFK to BWI ``involves scanning through multiple files, because it's not like one file that has everything conveniently like, there'' (Interview, March 16, 2012). When I asked what would make things easier if, hypothetically, all the information she needed were in one file, Rebecca responded by appealing to a previous assignment from last semester. In Rebecca's first-semester programming course (Basic Programming for Engineers), one of several multi-week projects had students create a system for users to conduct a fantasy football draft. The project involved, among other things, topics related to basic file management in the C language, including how to read in a file from disk (Interview, March 16, 2012). Rebecca explained:
 
-Rebecca: Um, like, cuz when we first got this project, uh, I actually was thinking ``oh, well this is just a lot like our fantasy football project we did last year.'' /Huh/ We uh, had to scan in, uh, someone had to enter like ``I wanna pick a quarterback,'' so then you had to scan in and go and look for all the quarterbacks in the file and say ``OK, this is the quarterback'' and everything. But, in that project we only had the one file that had everyone listed: quarterbacks, runningbacks, wide receiver, in one file. And all the information you needed there /Mmhmm/ So, you could just get it all and compare it all at once with one scanf /mmm/ whereas this you have to, take, uh, you scan in the flights, ah, the flights file. So, then you find the flight number. You have to save the ID from that flight number, use that ID to scan into the routes file /mmhmm/ and then save the routes information and then print it out with the flights information. (Interview, March 16, 2012)
+
+\begin{quote}
+  Rebecca: Um, like, cuz when we first got this project, uh, I actually was thinking ``oh, well this is just a lot like our fantasy football project we did last year.'' /Huh/ We uh, had to scan in, uh, someone had to enter like ``I wanna pick a quarterback,'' so then you had to scan in and go and look for all the quarterbacks in the file and say ``OK, this is the quarterback'' and everything. But, in that project we only had the one file that had everyone listed: quarterbacks, runningbacks, wide receiver, in one file. And all the information you needed there /Mmhmm/ So, you could just get it all and compare it all at once with one scanf /mmm/ whereas this you have to, take, uh, you scan in the flights, ah, the flights file. So, then you find the flight number. You have to save the ID from that flight number, use that ID to scan into the routes file /mmhmm/ and then save the routes information and then print it out with the flights information. (Interview, March 16, 2012)
+\end{quote}
+
 
 Rebecca's comments suggest she saw a coupling between the arrangement of the input information and the structure (and complexity) of the computational logic needed to process it. When one fantasy football file contained all of the relevant information (player, position, team, etc.) it could be read in and processed one line at a time. When information was fractured across files (pairs of airport codes in one file, full spell-outs of airport names in another, for example), Rebecca felt she'd need to use information shared across files (such as a route ID) to coordinate a scan across one file with a scan across another (and possibly an additional scan across a third file) before she would have all the necessary information and computations to return a result.
 
 I was interested in the connections Rebecca saw across projects, so I pressed on. When I asked whether she thought about trying to make this project like her fantasy football project, her answer was an emphatic ``Oh yeah, definitely!'' As she elaborated:
 
-Rebecca: That was like, as soon as we got this project I was like, ah! fantasy football! I'm just gonna go and see how much code I can rework from that and like, use /mmhmm/ in this project. And, my whole main file, like all those NULL checks and everything, I mean they're really simple to write, but I just copied `em and put `em there, cuz, we had the same thing. /Mmhmm/ Um, just changed, like, the names of the files.
+\begin{quote}
+  Rebecca: That was like, as soon as we got this project I was like, ah! fantasy football! I'm just gonna go and see how much code I can rework from that and like, use /mmhmm/ in this project. And, my whole main file, like all those NULL checks and everything, I mean they're really simple to write, but I just copied `em and put `em there, cuz, we had the same thing. /Mmhmm/ Um, just changed, like, the names of the files.
+\end{quote}
 
 As she explained, ``reading in files'' was a topic covered extensively in Basic Programming---the first course of the sequence---but they hadn't talked much about it in this semester's course.
 
-Rebecca: Because \[reading in from files\] was a big \[Basic Programming\] topic we hadn't talked about it much. /Yup/ So, I just, uh, went back to check how I did that /mmhmm/ and then, if I could I copied, but because a lot of the variables were different, uh, like these were more var---less, less variables, and more strings than last year /mmhmm/ uh, I just retyped it out. I just looked at how it was similar. (Interview, March 16, 2012)
-
-I started doing the scanning, and then I realized like, ``I do not have all the information I need in this one file,'' so that's when I realized I would have to make the dummy variable to compare to the other file, so, which, there was no other file in the, um, fantasy football one. So that's when I realized, I was like OK, so, there's gonna be other stuff that I'm gonna have to do, and /mmhmm/ I mean, I can still kinda compare cuz it's still scanning files /yup/, but the idea of the dummy variable and all that, that would not have come from fantasy football, so /sure/.
+\begin{quote}
+  Rebecca: Because reading in from files was a big Basic Programming topic we hadn't talked about it much. /Yup/ So, I just, uh, went back to check how I did that /mmhmm/ and then, if I could I copied, but because a lot of the variables were different, uh, like these were more var---less, less variables, and more strings than last year /mmhmm/ uh, I just retyped it out. I just looked at how it was similar. (Interview, March 16, 2012)
+\end{quote}
 
 In sum, then, Rebecca's repeated, nested scan loops were a structure she deliberately borrowed from a previous semester's project. By her telling, what seemed obvious was that ``scanning in from files'' was a topic she'd already covered, which meant she'd already developed a workable solution for how to solve that problem. Thus, she saw the problem of how to coordinate airport information from different files as a new instance of the old problem of reading information in from one file. Her flight database work, accordingly, tried opportunistically adapting a previously working solution to fit the current circumstances.
 
@@ -394,34 +394,132 @@ In sum, then, Rebecca's repeated, nested scan loops were a structure she deliber
 
 By our interview on April 6, Rebecca had already completed and submitted her code for the flights database project. When I looked at the final form of her code for finding one-stop flights I noted an unusual pattern described in section 2.4.3 above: she had a code chunk repeated almost character-for-character 7 times. In the interview, this section is what Rebecca referred to as ``my obnoxiously long part of my code'' (Interview, April 6, 2012):
 
-Rebecca: So, the way I did it was really long and probably, there was probably like a much easier way, but I just did a giant if---if statements \{swings cursor from line 50 to line 63\} If they wanted to fly on Monday /OK/ I went through and checked to see if the route ID was the same \{wiggles cursor across line 54\}, and if it did, I went through to che---uh, I made a check\_days function \{wiggles cursor across line 60\} uh, I ended up commenting that out cuz I didn't end up /mmhmm/ finishing it. But, uh, my check\_days function worked, it just didn't work completely with the code /OK/ (Interview, April 6, 2012)
+\begin{quote}
+  Rebecca: So, the way I did it was really long and probably, there was probably like a much easier way, but I just did a giant if---if statements \{swings cursor from line 50 to line 63\} If they wanted to fly on Monday /OK/ I went through and checked to see if the route ID was the same \{wiggles cursor across line 54\}, and if it did, I went through to che---uh, I made a check\_days function \{wiggles cursor across line 60\} uh, I ended up commenting that out cuz I didn't end up /mmhmm/ finishing it. But, uh, my check\_days function worked, it just didn't work completely with the code /OK/ (Interview, April 6, 2012)
+\end{quote}
 
 As I scrolled the screen to look at each of the repeated blocks of code, Rebecca elaborated:
 
-Rebecca: And this is why my code, I feel like, is not uh, concise enough, or, I don't really, I forget the word they use, but uh /\{inaudible\}/ it's very long because I couldn't figure out if I should do a while loop or whatever /Uh-huh/ But, so I was just like, I know this way should work if I get everything else right, that uh, just go through, if input's 1, if input's 2 and just do the same thing in each of `em just /Mmmhmm/ check for, ``oh, if days is 2, if days is 1'' instead of, like---Cuz I probably could have done, like, maybe a giant while loop, um, to try and, and if, while, inputs something, uh, then you check to see whatever i is. But, I could, I didn't---couldn't figure out how that would work, so I just did the same thing six times.
+\begin{quote}
+  Rebecca: And this is why my code, I feel like, is not uh, concise enough, or, I don't really, I forget the word they use, but uh /\{inaudible\}/ it's very long because I couldn't figure out if I should do a while loop or whatever /Uh-huh/ But, so I was just like, I know this way should work if I get everything else right, that uh, just go through, if input's 1, if input's 2 and just do the same thing in each of `em just /Mmmhmm/ check for, ``oh, if days is 2, if days is 1'' instead of, like---Cuz I probably could have done, like, maybe a giant while loop, um, to try and, and if, while, inputs something, uh, then you check to see whatever i is. But, I could, I didn't---couldn't figure out how that would work, so I just did the same thing six times.
 
-Interviewer: So, in, in each one of these it's like, looks, and I'm not sure about this, but it looks like the way you wrote it---so this \{highlights line 79\} is pretty much the same in all of them, right? /Yes/
+  Interviewer: So, in, in each one of these it's like, looks, and I'm not sure about this, but it looks like the way you wrote it---so this \{highlights line 79\} is pretty much the same in all of them, right? /Yes/
 
-Interviewer: So's this one \{highlights line 81\} /Yes/ this one \{highlights line 83\} Here's where it's different \{highlights line 85\}
+  Interviewer: So's this one \{highlights line 81\} /Yes/ this one \{highlights line 83\} Here's where it's different \{highlights line 85\}
 
-Rebecca: Yes, because it just checks if it's a 2 instead of a 1.
+  Rebecca: Yes, because it just checks if it's a 2 instead of a 1.
 
-Interviewer: OK. Um. /And then everything else is still the same/ Layover's still the same. OK.
+  Interviewer: OK. Um. /And then everything else is still the same/ Layover's still the same. OK.
 
-Rebecca: Yeah. So that's why it's prob---it's not, uh, the neatest code or whatever, because it's the same thing six times. (Interview, April 6, 2012)
+  Rebecca: Yeah. So that's why it's prob---it's not, uh, the neatest code or whatever, because it's the same thing six times. (Interview, April 6, 2012)
+\end{quote}
+
+
 
 Given Rebecca's assertions that her code wasn't neat, I asked what, if anything she might change if she hypothetically had another week to work on the project.
 
-Rebecca: Um, first I'd try and get it to make sure it worked completely /Ahh, OK, yeah/ this way, \{laughs\}, uh, and then, if I had the week after that whatever, I'd probably go through and see if I could figure out a way to make it concise-r because he likes uh, neat, as, like, code that's, uh, easy for the user to see /uh-huh/ I guess. Uh, I forget what, I keep forgetting what the word he used was at the beginning of the year, but uh, just very concise and, uh, this is \[a\] very expanded \{laughs\} way of coding, but, it made sense to me at the time and I was just like ``I just want something that makes sense right now.'' /Right/ So, that I can actually work with and have an idea.
+\begin{quote}
+  Rebecca: Um, first I'd try and get it to make sure it worked completely /Ahh, OK, yeah/ this way, \{laughs\}, uh, and then, if I had the week after that whatever, I'd probably go through and see if I could figure out a way to make it concise-r because he likes uh, neat, as, like, code that's, uh, easy for the user to see /uh-huh/ I guess. Uh, I forget what, I keep forgetting what the word he used was at the beginning of the year, but uh, just very concise and, uh, this is a very expanded \{laughs\} way of coding, but, it made sense to me at the time and I was just like ``I just want something that makes sense right now.'' /Right/ So, that I can actually work with and have an idea.
 
-Interviewer: Um, OK. So, so it would take you some extra thinking to figure out /Mmmhmm/ how to break this down into /Yes/ smaller stuff /smaller code/ Do you feel like you've had a lot of practice doing that, or like?
+  Interviewer: Um, OK. So, so it would take you some extra thinking to figure out /Mmmhmm/ how to break this down into /Yes/ smaller stuff /smaller code/ Do you feel like you've had a lot of practice doing that, or like?
 
-Rebecca: Uh, a little. Like, but, a lot of times in \[Basic Programming\] they didn't really mention too much about being concise. They were just like ``if you can do it, do it'' \{laughs\} /OK/ So I usually stuck to what made sense to me /Right/ uh, to turn the projects in. (Interview, April 6, 2012)
+  Rebecca: Uh, a little. Like, but, a lot of times in Basic Programming they didn't really mention too much about being concise. They were just like ``if you can do it, do it'' \{laughs\} /OK/ So I usually stuck to what made sense to me /Right/ uh, to turn the projects in. (Interview, April 6, 2012)
+\end{quote}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{media/CodeTimeline.png}
+\caption{We developed CodeTimeline to display snapshots in a timeline. Darkened lines reveals how the seven-fold repeated code began as a very simple switch statement but grew and grew in complexity over time.}
+\end{figure}
 
 In summary, Rebecca's ``expanded way of coding'' was a way of expressing ideas in code that, in her own words, ``made sense'' to her. Moreover, her Basic Programming course seemed, to her, to set expectations that functionality comes first; ``neatness'' second. If she hypothetically had more time to work on the project, her first priority would be to get her existing code working. Consequently, Rebecca's repetition of code can be understood as a kind of pragmatic solution to a difficult problem: choosing which computational techniques were best for accomplishing a complex goal. Moreover, her approach was shaped by the fact that her Basic Programming course historically valued a philosophy of ``if you can do it, do it'' (Interview, April 6, 2012). Ultimately, those factors seem to be what led Rebecca to choose repeating code that made sense to her over the difficult-to-envision alternative of a ``giant while loop.''
 
+\section{Conclusion}
 
-\subsection{Acknowledgments}\label{acknowledgments}
+Our interview with Rebecca corroborates the snapshot evidence that
+Rebecca directly copied code from a prior project. Moreover, Rebecca's
+behavior of copying her old fantasy football code suggests several
+implications.
+
+First, Rebecca's ``design
+inertia'' actually traces as far back as the decisions she made during
+the first project of her first semester of programming. That is, by
+copying code (and particularly file-scanning logic) from an old project,
+she was incorporating core functionality that she designed when she
+first learned to program. Admittedly, code reuse isn't in and of itself
+a problem in software development. \cite{parsons_cognitive_2004} Parson and Saunders for
+example, have written on cognitive heuristics that keep professional
+software engineers from reusing code, even when reusing and extending
+existing software artifacts is the best course of action on a software
+project. So, the concern isn't that Rebecca reused code, but rather the
+matter of what cognitive dynamics were at play that directed her choice
+to reuse that code. In that regard, the constructs of framing and
+transfer may help us better understand Rebecca's activity.
+
+Framing, as it has been applied in contexts such as physics education
+\cite{elby_epistemological_2010,hammer_resources_2005,scherr_student_2009} and
+mathematics education \cite{vandesande_achieving_2012}, concerns how
+participants understand the social and intellectual activities in which
+they're engaged. Of particular relevance to studying Rebecca is the
+notion of \emph{epistemological framing}, which van de Sande and Greeno
+summarize as
+
+\begin{quote}
+  participants' understanding of kinds of knowledge that are relevant for
+  use in their activity and the kinds of knowledge, understanding, and
+  information they need to construct to succeed in their activity (e.g.,
+  what kind of information would count as a solution to the problem they
+  are working on). \cite{vandesande_achieving_2012}
+\end{quote}
+
+Rebecca's decision to copy code from fantasy football implicitly
+reflects her orientation toward what kinds of knowledge (the course
+topic of scanning information from files) are relevant to solving the
+problem. More broadly, note that in Rebecca's interview she explains
+that her primary objective is to get a solution that works, which stands
+in contrast to having a design priority like having a solution that is
+elegant, or one that transparently manages complexity. That commitment
+again reflects a manifestation of epistemological framing as ``what
+would count as a solution,'' where for Rebecca what counts is a solution
+that works.
+
+Additionally, Rebecca saw the flight database project as a new instance
+of a prior problem: fantasy football. Consequently, she consciously
+adapted past solution patterns, because the flights database project
+looked like it contained problems she had already solved in previous
+code. Rebecca's deliberate reuse of old code can be readily understood
+as an example of what Schwartz, Chase, and Bransford \cite{schwartz_resisting_2012} call
+``overzealous transfer'':
+
+\begin{quote}
+  Of particular concern are situations where students transfer skills,
+  knowledge, and routines that are effective for the task at hand but may
+  nevertheless be sub-optimal in the long run because they block
+  additional learning. We will call this \emph{overzealous transfer}
+  (OZT)---people transfer solutions that appear to be positive because
+  they are working well enough, but they are nevertheless negative with
+  respect to learning what is new. \cite{schwartz_resisting_2012}
+\end{quote}
+
+In short, when students overzealously transfer prior knowledge as
+Rebecca did, ``they may believe they are doing the right thing, and
+without appropriate feedback they cannot know otherwise'' \cite{schwartz_resisting_2012}
+
+In Rebecca's case, the constructs of framing and overzealous transfer
+together let us describe why she would have repurposed a solution that
+she felt was adequate, even to the exclusion of the topics being taught
+in class and the explicit directions in the project brief. By framing
+the flights database problem as a new instance of an old problem,
+Rebecca treated it as she did the old problem. But, she arguably
+transferred \emph{too} \emph{much} of the old code's structure; so much
+that she had to introduce even more complexity into her code just to
+make the transferred parts work properly under the new constraints. And,
+because her framing of the task seemed to privilege a philosophy of ``if
+you can do it, do it'' (Interview, April 6, 2012), her primary goals
+were to get her program to work, by whatever means she could understand
+and trust.
+
+\section{Acknowledgments}\label{acknowledgments}
 
 Blinded for review.
 
