@@ -115,6 +115,125 @@ we explicate both the challenges of studying students' software design
 processes and the potential for such study to inform accounts of
 teaching and learning.
 
+\section{Context and Methods}\label{context-and-methods}
+
+\subsection{Context of the study}\label{context-of-the-study}
+
+The data presented in this case are taken from an ongoing IRB-approved
+study of undergraduate electrical engineering majors undertaken at
+\emph{Flagship State}, a large, public research institution on the east
+coast. For two semesters, I have followed a total of 10 students taking
+``Intermediate Programming Concepts for Engineers.'' It is the second of
+a required two-semester course sequence in programming.\footnote{Hereafter,
+  I use ``Intermediate Programming'' to refer to the second course and
+  ``Basic Programming'' to refer to the first.} Students can (and some
+do) place out of Basic Programming via AP Computer Science credit, but
+all Electrical and Computer Engineering students must take Intermediate
+Programming.
+
+Intermediate Programming has two 75-minute lectures per week and a
+weekly discussion section led by an undergraduate Teaching Assistant
+(TA). Typical enrollment is between 60 and 80 students per semester.
+Like Basic Programming, Intermediate Programming is taught using the C
+programming language, and it incorporates multi-week projects in C as
+part of its assessment structure. Students must work individually on
+four projects over the course of the semester, which together comprise
+45\% of their final course grade.
+
+Grading projects involves running students' compiled code against
+automated tests that determine whether a student program's output
+matches the instructor's canonical output. If a student's program
+completely matches the canonical output, the student receives at least a
+90\% grade on a project. The remaining 10\% are discretionarily
+allocated ``style'' points, awarded for things like proper formatting,
+code commenting, and functional decomposition (Field Notes).
+
+This study centers on ``Flights Database,'' the second of four projects
+assigned to Intermediate Programming students during the spring 2012
+semester. Students were asked to build a text menu-based program that
+would let users query information about airports and plan non-stop and
+one-stop flights between airports. For this project, the instructor gave
+students three separate text files as source material. The
+\textbf{airports} file contained names of airports and their
+three-letter abbreviation codes; the \textbf{routes} file contained
+3-tuples of two airport codes and the route number of a flight flying
+between them; the \textbf{flights} file contained a list of specific
+flight information (including arrival and departure times) by route
+number. Crucially, in order to be able to respond to user queries
+students would need to build a program that could coordinate information
+across all three files to return an answer.
+
+My analysis details the work of Rebecca, a female first-year electrical
+engineering major. I focus specifically on Rebecca's code for finding
+``one-stop'' flights, which the instructor defined as ``all pairs of
+ﬂights that route the user between the departure and arrival airports
+with exactly 1 stop (i.e., a one-connection ﬂight)'' (Flights Database
+handout, 2012). The one-stop problem is particularly challenging. To
+solve it successfully students' code must accept a user's choice of
+airports and day, then stitch together routes that involve two separate
+flights in a way that passes stringent constraints for acceptable
+layover times.
+
+\subsection{Methods}\label{methods}
+
+This study proceeds from an empirical challenge: how can we develop
+accounts of students' programming activity that explain the form and
+evolution of their code on a design project? The focused form of that
+challenge for this study is ``how can we understand the unconventional
+design choices embedded in Rebecca's one-stop flight code?'' To answer
+that question, my study draws from three data streams: ethnographic
+observation, clinical interviewing, and code snapshot analysis.
+
+For two semesters, I ethnographically embedded myself in the same
+instructor's section of Intermediate Programming. My aim throughout was
+to see what students see in terms of course material, assignment
+directives, and instruction. In fall 2011 I observed approximately 50\%
+of the course lectures. I also independently completed all class
+homeworks and three out of the four course projects to more fully
+understand the course's assessments. In spring 2012 I continued
+attending lectures, though less frequently, and began attending select
+TA-led discussion sections. During both lectures and discussion sections
+I took field notes while recording ambient audio using a LiveScribe
+Pulse pen.
+
+Rebecca was one of four students (three female, one male) willing and
+able to participate in a series of 1-hour outside-of-class clinical
+interviews during the spring 2012 semester.\footnote{In total, roughly
+  30 students responded to my initial in-class solicitation to be
+  contacted by email about my study. Of the students I emailed,
+  approximately 8 students responded to my emails to schedule interview
+  times. Of those 8, only four students were able to successfully find
+  interview time slots that fit our respective schedules.} I interviewed
+Rebecca five times, and in typical interviews I split time between
+asking about her experiences in the course and giving her time in the
+interview to work on her project code. During each interview, I
+simultaneously used:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  A Kodak Zi8 camera for video-recording our interactions
+\item
+  A LiveScribe Pulse pen to capture Rebecca's on-paper penstrokes
+\item
+  A MacBook Pro (early 2011) with screen-recording software to capture
+  everything on-screen while Rebecca programmed
+\end{enumerate}
+
+The final component of data gathering is modeled after Jadud's (2006)
+system for capturing students' code. My colleagues and I developed
+software, built around the open-source version control system called
+Git, that effectively creates an entire copy of a student's code---what
+we call ``snapshots''---every time students invoke the compiler on their
+code. Our software then sends those snapshots to a secure,
+researcher-accessible server in real-time as they're created.
+Consequently, I could plan each interview with Rebecca around
+up-to-the-minute knowledge of her work---in some cases work she had
+completed just hours before the interview---and tailor my interview
+questions to emerging patterns in her code. In total, Rebecca's work
+resulted in 958 compilation snapshots over the course of the semester.
+
 \section{Analyzing only the code Rebecca turned in: What an instructor might see}\label{analyzing-only-the-code-rebecca-turned-in-what-an-instructor-might-see}
 
 In this phase of analysis, I restrict data to only the final version of \texttt{one\_stop\_flight.c} Rebecca submitted as part of her project. This restriction is important because of the data that gets left out. We're forced to see Rebecca's design work the way her instructor did when he graded it: as a final product. The submitted code contains little---if any---evidence of design iteration. And, we have almost no access to streams of activity (inscriptional, gestural, verbal, and otherwise material) that would help us understand Rebecca's early stage design \citep{petre_software_2014}. Indeed, other than the code itself, the only artifacts that actually carry Rebecca's voice in this phase of analysis are the comments she places in her code. Put another way: restricting our scope to just code---and only the final submitted code at that---denies the analyst access to the channels of ``talk, embodied action, and inscription'' involved in design work \citep[ p.~179]{hall_disrupting_2002}.
