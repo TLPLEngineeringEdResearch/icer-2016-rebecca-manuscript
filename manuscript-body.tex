@@ -1,20 +1,116 @@
 \section{Introduction}\label{introduction}
 
-\subsection{We need more research on how software gets designed}\label{we-need-more-research-on-how-software-gets-designed}
+A growing trend in computer science education research is the collection and analysis of code snapshot data—records of the state of and changes to students’ code as they develop it \cite{jadud_methods_2006,rodrigo_analyzing_2009,spacco_marmoset_2006}. Though specific implementations differ, the general strategy in such projects is that a student event (typically compiling code or saving a file) triggers a procedure that creates a record containing the entire content of all of a student's relevant files, as well as associated metadata (time of save/compilation, for example, and any compiler errors that may have been generated). Mining data from such snapshotting systems has led to large-scale documentation of common student errors \cite{spacco_marmoset_2006}, the development of compile-time detectors to catch common student errors \cite{spacco_software_2005}, and the proposal of formative assessment models to predict student success \cite{jadud_methods_2006,tabanao_predicting_2011}. Building on existing momentum, some researchers are actively pushing for a continued scale-up of how we collect code snapshot data. One current proposal even calls for creating an international database by collecting snapshot data from thousands of introductory programming students worldwide \cite{kolling_building_2012}.
 
-In 2010, the journal \emph{Design Studies} devoted a special issue to studies of how professional software engineers design complex systems \cite{petre_editorial_2010}. The journal issue featured five different research perspectives on the same dataset: videos of three professional software engineering teams trying to design a traffic simulator. The existence of the journal issue, the monograph that followed it \cite{petre_software_2014} and the investigations contained therein, were motivated by what the issue's editors saw as a pressing need:
+What's common to these threads of research is how they mine the data. In
+most applications of code snapshot\footnote{What I call ``code
+  snapshot'' research may be more formally called ``online protocol''
+  research \cite{jadud_methods_2006,rodrigo_analyzing_2009}. ``Online'' here isn't mean to mean
+  the sense of globally-connected computers, but rather that student
+  materials are collected in a minimally-intrusive way \emph{while
+  students work}.} research, the aim is to average across events and
+sessions to arrive at a characteristic measure of a student's behavior.
+Jadud \cite{jadud_methods_2006}, for example, develops the idea of a student's ``Error
+Quotient,'' a measure of how effectively a student addresses
+compile-time errors in their code.\footnote{A useful way of thinking
+  about Jadud's \cite{jadud_methods_2006} error quotient is that the computation believes
+  in second chances. It doesn't penalize students for making errors; it
+  penalizes students if they don't fix a given error before compiling
+  the same piece of code \emph{again.}} Rodrigo and colleagues extend
+the idea of error quotient and introduce similar
+measures such as students' ``compilation profiles'' \cite{rodrigo_analyzing_2009}, ``frustration profiles'' \cite{rodrigo_affective_2009}, and ``error
+profiles'' \cite{tabanao_predicting_2011}. Because these measures can be
+collected in real-time as students code, they offer the potential to
+identify at-risk students and respond with early
+interventions.
 
-\begin{quote}
-\emph{Not enough is known about the formative stages of software design.} The software engineering community has produced numerous design tools and languages, but, in practice, when software designers are first presented with a novel design problem, they more often than not will eschew these tools and languages. During formative design, software engineers spend a great deal of time engaging in creative, exploratory design thinking using pen and paper or a whiteboard---whether alone or in a small group. However, not enough is known about how software designers work in such settings. What do designers actually do during early software design? How do they communicate? What sorts of drawings do they create? \emph{What kinds of strategies do they software engineers apply in exploring the vast space of possible designs?} \cite{petre_editorial_2010} p.~533; emphasis mine
-\end{quote}
+But, for all the data these methods collect their focus is primarily
+what Jadud (2006) calls students' ``syntactic'' struggles: the challenge
+of articulating well-formed statements a compiler can properly parse.
+This focus on syntax-level struggles leads to both a methodological and
+theoretical trade-off: we can see in detail how students struggle with
+wording, but we see less of how they struggle with the meaning and
+intent of their code. Syntactical analyses necessarily ignore the
+specific \emph{content} of students' code because they abstract
+meta-information about the event: error type, error location, frequency
+of error.
 
-Research in both the special issue \cite{petre_editorial_2010} and the monograph \cite{petre_software_2014} takes on a variety of challenges in the study of expert software design practice. One challenge, for example, is that of understanding how engineers process, prioritize, and cope with design requirements. Ball, Linden, Onarheim, and Christensen \cite{ball_design_2010} observed that engineers deploy mixed strategies, developing solutions breadth-first for easy problems and depth-first for more complex problems. They also found that the more complex a requirement became, the more likely engineers were to create speculative simulations (through talk and representations) about how a system might work to solve that problem \cite{ball_design_2010}.
+As an analogy, suppose that instead of studying computer science
+students we were studying screenwriting students. Further suppose we
+have a system to track data whenever students save their screenplays and
+scripts. For each save, we get a copy of the entire script at that time.
+We can also run an automated analysis to check whether they've properly
+formatted slug lines\footnote{In a screenplay, a slug line gives
+  information about where and when a scene takes place. For example:
+  ``INT. FORTRESS OF SOLITUDE -- DAY.''}, put character names in
+all-capital letters, properly numbered scenes, etc. We might even know
+where students are when they write (coffee shop, library, home, etc.).
+If we mine that data, we could learn something about students'
+\emph{screenwriting behavior}, but only at the level of how they
+struggle with screenwriting syntax. Using only error-based data it's
+much harder to answer questions such as:
 
-Looking at the design sessions longitudinally, Baker and van der Hoek \cite{baker_ideas_2010} explored the shape and trajectory of how ideas generated in the design process develop and relate to one another. Those researchers found roughly a third of the ideas discussed in a typical design session ``were reiterations or rephrasings of previously stated ideas'' \cite{baker_ideas_2010}. While it is perhaps frustrating that ideas would be repeated so much, the authors argue such repetition can be viewed as a kind of continual revisitation to make sure a proposed design coheres:
+\begin{itemize}
+\item
+  How does this student construct a scene or handle dialog in their
+  script?
+\item
+  Does the student seem to have a grasp of pacing, story beats, and
+  efficient exposition?
+\item
+  How does their writing manage and develop character arcs?
+\end{itemize}
 
-\begin{quote}
-Rather than representing a failure on the part of the designers, this repetition seems to be a necessary character of successful design sessions. Each time an idea is resurrected it is placed them sic in a new context, and compared to different aspects of the system. In this way, a concept of compatible, elegant design ideas is slowly converged upon. \cite{baker_ideas_2010}
-\end{quote}
+We also still can't answer fundamental questions about the context of
+students' writing processes:
+
+\begin{itemize}
+\item
+  Do they use particular techniques to ``break story'' and decompose a
+  narrative into its key beats (index cards? Whiteboard?)
+\item
+  Do they participate in a writing group?
+\item
+  How do they respond to people giving them notes on revising a script?
+\end{itemize}
+
+To sum up, because snapshot systems are designed to collect the totality
+of a codebase at frequent intervals, they offer a rich record of data
+that captures the results---both major and minor---of students' design
+decisions. But, computing education research that \emph{uses}
+code-snapshotting has focused much more on detecting, classifying, and
+predicting student errors than it has on showing how students progress
+in programming and design expertise. Nevertheless, snapshot-based
+research shows tremendous promise. Given that :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Snapshotting students' code represents a cutting-edge way to resolve
+  the way code---as a design artifact---evolves over time, \emph{but}
+\item
+  Code snapshots, as they're currently used, explore neither the
+  totality of a student's design nor the rich context of that design's
+  production, \emph{and}
+\item
+  There is a lack of parity between studies of how professionals design
+  software and studies of how students do so,
+\end{enumerate}
+
+It seems sensible to ask: \emph{can code snapshots be used---possibly in
+synthesis with ethnographically-oriented methods---to start studying how
+students' design thinking plays a role in their introductory programming
+work?} We believe the answer is yes.
+
+In what follows, we present work that proceeds from an empirical
+challenge: how can we develop accounts of students' programming activity
+that explain the form and evolution of their code on a design project?
+We offer an account of one student---Rebecca---and her experiences and
+code from a second-semester course on programming concepts for
+engineers. Using data from both code snapshots and clinical interviews,
+we explicate both the challenges of studying students' software design
+processes and the potential for such study to inform accounts of
+teaching and learning.
 
 \section{Analyzing only the code Rebecca turned in: What an instructor might see}\label{analyzing-only-the-code-rebecca-turned-in-what-an-instructor-might-see}
 
@@ -235,3 +331,13 @@ Interviewer: Um, OK. So, so it would take you some extra thinking to figure out 
 Rebecca: Uh, a little. Like, but, a lot of times in \[Basic Programming\] they didn't really mention too much about being concise. They were just like ``if you can do it, do it'' \{laughs\} /OK/ So I usually stuck to what made sense to me /Right/ uh, to turn the projects in. (Interview, April 6, 2012)
 
 In summary, Rebecca's ``expanded way of coding'' was a way of expressing ideas in code that, in her own words, ``made sense'' to her. Moreover, her Basic Programming course seemed, to her, to set expectations that functionality comes first; ``neatness'' second. If she hypothetically had more time to work on the project, her first priority would be to get her existing code working. Consequently, Rebecca's repetition of code can be understood as a kind of pragmatic solution to a difficult problem: choosing which computational techniques were best for accomplishing a complex goal. Moreover, her approach was shaped by the fact that her Basic Programming course historically valued a philosophy of ``if you can do it, do it'' (Interview, April 6, 2012). Ultimately, those factors seem to be what led Rebecca to choose repeating code that made sense to her over the difficult-to-envision alternative of a ``giant while loop.''
+
+
+\subsection{Acknowledgments}\label{acknowledgments}
+
+Blinded for review.
+
+\clearpage
+
+\bibliographystyle{acm}
+\bibliography{bibliography}
