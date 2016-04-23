@@ -246,51 +246,17 @@ In this phase of analysis, I restrict data to only the final version of \texttt{
 
 \subsection{Rebecca's file-scanning solution is hard to read and has high time-complexity}\label{rebeccas-file-scanning-solution-is-hard-to-read-and-has-high-time-complexity}
 
-After declaring variables and opening the three provided text files (flights, routes, and airports)\footnote{See Appendix A for examples of each of the three file types.}, Rebecca's one-stop flight code enters a series of conditionally-nested \texttt{fscanf()} commands. The purpose of \texttt{fscanf()} is to scan through the characters of a file, most often scanning one line at a time. The programmer can specify delimited patterns of text to look for, e.g., ``in each line, look for a word, followed by a space, followed by two digits.'' \texttt{fscanf()} also gives the programmer the flexibility to store the values of matched patterns to variables. Here's an annotated explanation of file-scanning pattern Rebecca uses on line 24 of her code:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{fscanf(               }\CommentTok{// Read in a line of data}
-  \NormalTok{routes,             }\CommentTok{// From the file called 'routes'}
-  \StringTok{"%d.  %s %s"}\NormalTok{,       }\CommentTok{// Match the pattern (integer) (string) (string)}
-  \NormalTok{&route_id,          }\CommentTok{// Store the value of integer to the variable route_id}
-  \NormalTok{departure_airport,  }\CommentTok{// Store the value of the first string to departure_airport}
-  \NormalTok{arrival_airport     }\CommentTok{// Store the value of the second string to arrival_airport}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-``Once you find a word followed by two digits, store the word in the following location in memory, and store the digits in this other location in memory.'' What's interesting isn't \emph{that} Rebecca used \texttt{fscanf()} to read through files like the list of airports. Any suitable solution for this project would need extract text patterns from source files, which \texttt{fscanf()} does. Rather, what's interesting is \emph{how} she uses \texttt{fscanf()} in her design.
+After declaring variables and opening the three provided text files (flights, routes, and airports)\footnote{See Appendix A for examples of each of the three file types.}, Rebecca's one-stop flight code enters a series of conditionally-nested \texttt{fscanf()} commands. Any suitable solution for this project would need extract text patterns from source files, which \texttt{fscanf()} does. So, \emph{that} Rebecca uses \texttt{fscanf()} in her code is not itself surprising. Rather, what's interesting is \emph{how} she uses \texttt{fscanf()} in her design.
 
 Rebecca's file-scanning logic never persistently stores the contents of the files it reads in. Rather, her program reads through files one line at a time, and it essentially can't process or act on airport/flight information not in the line currently being scanned. Instead, it's been designed to copy single patterns temporarily, then rewind the file back to the top and start reading in one-line-at-a-time again.
 
 What's consequential about Rebecca's design choice? Computationally, her code has to repeatedly open multiple files (or sometimes repeatedly open the same file multiple times) and scan lines one line at a time in order to coordinate information. So, the task of finding a one-stop flight between two cities becomes a series of repeated, one-line-at-a-time scans of external files:
 
-\hypertarget{fscanfPattern}{\label{fscanfPattern}}
-\begin{Shaded}
-\begin{Highlighting}[numbers=left,,firstnumber=20,]
-\KeywordTok{while}\NormalTok{(fscanf(airports, }\StringTok{"%s  %50[^}\CharTok{\textbackslash{}n}\StringTok{]"}\NormalTok{, airport_code, city) != EOF)   }\CommentTok{//scan for the departure code but not to the arrival code}
-  \NormalTok{\{}
-    \KeywordTok{if}\NormalTok{(airport_code != departure_input || airport_code != arrival_input)}
-      \NormalTok{\{}
-        \KeywordTok{while}\NormalTok{(fscanf(routes, }\StringTok{"%d.  %s %s"}\NormalTok{, &route_id, departure_airport, arrival_airport) != EOF)  }\CommentTok{//finds the name of the city of the departure airport}
-          \NormalTok{\{}
-            \KeywordTok{if}\NormalTok{(departure_input[}\DecValTok{0}\NormalTok{]==departure_airport[}\DecValTok{0}\NormalTok{] && departure_input[}\DecValTok{1}\NormalTok{]==departure_airport[}\DecValTok{1}\NormalTok{] && departure_input[}\DecValTok{2}\NormalTok{]==departure_airport[}\DecValTok{2}\NormalTok{])}
-              \NormalTok{\{}
-                \KeywordTok{if}\NormalTok{(arrival_airport[}\DecValTok{0}\NormalTok{] != arrival_input[}\DecValTok{0}\NormalTok{] || arrival_airport[}\DecValTok{1}\NormalTok{] != arrival_input[}\DecValTok{1}\NormalTok{] || arrival_airport[}\DecValTok{2}\NormalTok{] != arrival_input[}\DecValTok{2}\NormalTok{])}
-                  \NormalTok{\{}
-                    \NormalTok{strcpy(stop_code, arrival_airport);}
-                    \NormalTok{rewind(routes);}
-                    \NormalTok{departure_airport[}\DecValTok{0}\NormalTok{]=' ';}
-                    \NormalTok{departure_airport[}\DecValTok{1}\NormalTok{]=' ';}
-                    \NormalTok{departure_airport[}\DecValTok{2}\NormalTok{]=' ';}
-                    \NormalTok{arrival_airport[}\DecValTok{0}\NormalTok{]=' ';}
-                    \NormalTok{arrival_airport[}\DecValTok{1}\NormalTok{]=' ';}
-                    \NormalTok{arrival_airport[}\DecValTok{2}\NormalTok{]=' ';}
-                    \KeywordTok{while}\NormalTok{(fscanf(routes, }\StringTok{"%d.  %s %s"}\NormalTok{, &route_id, departure_airport, arrival_airport) != EOF)  }\CommentTok{//now searches for the place where the stop is the}
-                      \NormalTok{\{                                                                                      }\CommentTok{//depart airport and the arrival input is correct}
-\end{Highlighting}
-\end{Shaded}
+\begin{figure}[htbp]
+\centering
+\includegraphics{media/fscanf.pdf}
+\caption{A portion of Rebecca's nested \texttt{fscanf()} statements}
+\end{figure}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
